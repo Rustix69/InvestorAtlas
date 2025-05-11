@@ -1,47 +1,50 @@
-# Welcome to Investor Atlas
+# 🚀 InvestorAtlas
 
 ![Tech Stack](https://img.shields.io/badge/tech-react%20|%20typescript%20|%20tailwind-blue)
 
-## Project info
+InvestorAtlas is a modern platform designed to help **startup founders and SaaS builders** connect with the right investors. Originally developed as a fraud management system, InvestorAtlas has evolved into an intelligent matchmaking platform powered by modern AI systems and a sleek developer experience.
 
-This is the repository for Investor Atlas, a Fraud Management System with a modern AI systems
+### 🌐 Live Website  
+👉 [https://investor.vercel.app](https://investor.vercel.app)
 
-## How can I edit this code?
+---
 
-There are several ways of editing your application.
+## 🛠 Tech Stack
 
-**Use your preferred IDE**
+InvestorAtlas is built with:
 
-If you want to work locally using your own IDE, you can clone this repo and push changes.
+- ⚡ **Vite** – blazing fast dev server and bundler  
+- ⚛️ **React** – component-based UI framework  
+- 🟦 **TypeScript** – strong typings for better DX  
+- 🎨 **Tailwind CSS** – utility-first styling  
+- 🧩 **shadcn-ui** – accessible and beautiful UI components  
+- ✨ **Magic UI** – delightful micro-interactions and UI effects  
 
-The only requirement is having Node.js & npm installed
+---
 
-Follow these steps:
+## 📦 Getting Started
 
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone https://github.com/Rustix69/ModusAI
+### Prerequisites
 
-# Step 2: Navigate to the project directory.
-cd ModusAI
+Make sure you have the following installed:
 
-# Step 3: Install the necessary dependencies.
+- [Node.js](https://nodejs.org/) (version 16+ recommended)  
+- npm (comes with Node.js)
+
+### Installation & Development
+
+Clone the repo and get started:
+
+```bash
+# 1. Clone the repository
+git clone https://github.com/Rustix69/InvestorAtlas
+
+# 2. Navigate into the project directory
+cd InvestorAtlas
+
+# 3. Install dependencies
 npm install
 
-# Step 4: Start the development server with auto-reloading and an instant preview.
+# 4. Start the development server
 npm run dev
-```
 
-## Live Website
-Visit the live site: https://modusai.vercel.app
-
-## What technologies are used for this project?
-
-This project is built with:
-
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
-- Magic UI
