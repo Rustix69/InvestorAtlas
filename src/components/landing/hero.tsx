@@ -108,7 +108,7 @@ const Hero = () => {
           className="text-4xl md:text-5xl lg:text-6xl font-extrabold max-w-4xl mb-6 font-satoshi tracking-tight bg-clip-text text-transparent bg-gradient-to-b from-white via-zinc-400 to-zinc-400"
           variants={itemVariants}
         >
-          Find 2500+ investors ready to
+          Find 15000+ investors ready to
           <br />
           fund your startup idea
         </motion.h1>
