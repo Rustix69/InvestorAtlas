@@ -25,6 +25,7 @@ exports.createOrder = async (req, res) => {
       success: true,
       order
     });
+    console.log("Order created successfully");
   } catch (error) {
     if (error.statusCode === 401 || 
         (error.error && error.error.code === 'BAD_REQUEST_ERROR') ||
