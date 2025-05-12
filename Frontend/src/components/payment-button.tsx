@@ -2,7 +2,7 @@ import { useState, useRef, useCallback } from 'react';
 import { useRazorpay, RazorpayOrderOptions } from 'react-razorpay';
 import { Button } from "@/components/ui/button";
 import { PiggyBank } from "lucide-react";
-import RazorpayErrorGuide from "./razorpay-error-guide";
+import RazorpayErrorGuide from "./ui/razorpay-error-guide";
 
 interface PaymentButtonProps {
   amount?: number;

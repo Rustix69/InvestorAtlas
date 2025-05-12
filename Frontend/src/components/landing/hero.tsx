@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import { ChevronRight, Calendar, Search } from "lucide-react";
 import InvestorDashboardMockup from "@/components/ui/investor-dashboard-mockup";
 import { motion } from "framer-motion";
-import PaymentButton from "@/components/ui/payment-button";
+import PaymentButton from "@/components/payment-button";
 
 const Hero = () => {
   // Animation variants
