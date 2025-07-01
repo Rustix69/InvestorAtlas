@@ -107,6 +107,11 @@ const getInvestorsList = async (req, res) => {
           masked["Linkedin URL"] = 'https://linkedin.com/in/XXXX';
         }
       }
+
+      // Mask Website
+      if (masked["Website"]) {
+        masked["Website"] = 'https://example.com';
+      }
       
       return masked;
     });
