@@ -1,4 +1,4 @@
-const { connectDB } = require('../config/db');
+import pool from '../config/db.js';
 
 // Helper function to mask investor name
 const maskName = (name) => {
@@ -11,13 +11,9 @@ const maskName = (name) => {
 
 // Get all investors data (unmasked - for admin use)
 const getAllInvestors = async (req, res) => {
-  let client;
-  
   try {
-    client = await connectDB();
-    
     // Query to get all data from InvestorsV01 table with row number as ID
-    const result = await client.query(`
+    const result = await pool.query(`
       SELECT ROW_NUMBER() OVER (ORDER BY "Full Name") as id, *
       FROM "InvestorsV01"
     `);
@@ -36,23 +32,14 @@ const getAllInvestors = async (req, res) => {
       message: 'Failed to fetch investors data',
       error: process.env.NODE_ENV === 'development' ? error.message : undefined
     });
-  } finally {
-    if (client) {
-      await client.end();
-      console.log('🔌 Disconnected from database');
-    }
   }
 };
 
 // Get investors list with masked sensitive fields (for frontend list view)
 const getInvestorsList = async (req, res) => {
-  let client;
-  
   try {
-    client = await connectDB();
-    
     // Query to get basic info from InvestorsV01 table with row number as ID
-    const result = await client.query(`
+    const result = await pool.query(`
       SELECT ROW_NUMBER() OVER (ORDER BY "Full Name") as id, *
       FROM "InvestorsV01"
     `);
@@ -130,32 +117,25 @@ const getInvestorsList = async (req, res) => {
       message: 'Failed to fetch investors list',
       error: process.env.NODE_ENV === 'development' ? error.message : undefined
     });
-  } finally {
-    if (client) {
-      await client.end();
-      console.log('🔌 Disconnected from database');
-    }
   }
 };
 
 // Get specific investor details by ID (for detail view)
 const getInvestorById = async (req, res) => {
-  let client;
   const { id } = req.params;
   
   try {
-    client = await connectDB();
-    
     // Query to get specific investor data by row number
-    const result = await client.query(`
-      SELECT ROW_NUMBER() OVER (ORDER BY "Full Name") as id, *
-      FROM "InvestorsV01"
-    `);
+    const result = await pool.query(`
+      WITH numbered_rows AS (
+        SELECT ROW_NUMBER() OVER (ORDER BY "Full Name") as id, *
+        FROM "InvestorsV01"
+      )
+      SELECT * FROM numbered_rows
+      WHERE id = $1
+    `, [id]);
     
-    // Find the investor with the matching ID
-    const investor = result.rows.find(row => row.id == id);
-    
-    if (!investor) {
+    if (result.rows.length === 0) {
       return res.status(404).json({
         success: false,
         message: 'Investor not found'
@@ -165,7 +145,7 @@ const getInvestorById = async (req, res) => {
     res.status(200).json({
       success: true,
       message: 'Investor details fetched successfully',
-      data: investor
+      data: result.rows[0]
     });
     
   } catch (error) {
@@ -175,15 +155,10 @@ const getInvestorById = async (req, res) => {
       message: 'Failed to fetch investor details',
       error: process.env.NODE_ENV === 'development' ? error.message : undefined
     });
-  } finally {
-    if (client) {
-      await client.end();
-      console.log('🔌 Disconnected from database');
-    }
   }
 };
 
-module.exports = {
+export {
   getAllInvestors,
   getInvestorsList,
   getInvestorById

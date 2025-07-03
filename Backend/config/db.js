@@ -1,25 +1,24 @@
-// db.js
-const { Client } = require('pg');
+import pkg from 'pg';
+const { Pool } = pkg;
+import dotenv from 'dotenv';
 
-// Create a new client instance for each connection
-async function connectDB() {
-  const client = new Client({
-    connectionString: process.env.DATABASE_URL,
-    ssl: {
-      rejectUnauthorized: false, // required for Supabase SSL
-    },
-  });
+// Ensure environment variables are loaded
+dotenv.config();
 
-  try {
-    await client.connect();
-    console.log('✅ Connected to database');
-    return client;
-  } catch (err) {
-    console.error('❌ Database connection error:', err.stack);
-    throw err;
+const pool = new Pool({
+  connectionString: process.env.DATABASE_URL,
+  ssl: process.env.NODE_ENV === 'production' ? {
+    rejectUnauthorized: false
+  } : false
+});
+
+// Test the connection
+pool.query('SELECT NOW()', (err, res) => {
+  if (err) {
+    console.error('❌ Database connection error:', err.message);
+  } else {
+    console.log('✅ Database connected successfully');
   }
-}
+});
 
-module.exports = {
-  connectDB,
-};
+export default pool;

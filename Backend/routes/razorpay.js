@@ -1,6 +1,7 @@
-const express = require("express");
+import express from 'express';
+import { createOrder, verifyPayment } from '../controllers/razorpayController.js';
+
 const router = express.Router();
-const { createOrder, verifyPayment } = require("../controllers/razorpayController");
 
 // Create a new Razorpay order
 router.post("/create-order", createOrder);
@@ -8,4 +9,4 @@ router.post("/create-order", createOrder);
 // Verify Razorpay payment
 router.post("/verify-payment", verifyPayment);
 
-module.exports = router;
+export default router;

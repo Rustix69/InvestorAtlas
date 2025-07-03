@@ -1,8 +1,8 @@
-const express = require("express");
-const dotenv = require("dotenv");
-const cors = require("cors");
-const { connectDB } = require('./config/db');
-
+import express from 'express';
+import dotenv from 'dotenv';
+import cors from 'cors';
+import investorsRouter from './routes/investors.js';
+import razorpayRouter from './routes/razorpay.js';
 
 // Load environment variables
 dotenv.config();
@@ -14,11 +14,9 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-
-
 // Routes
-app.use("/api/razorpay", require("./routes/razorpay"));
-app.use("/api/investors", require("./routes/investors"));
+app.use("/api/razorpay", razorpayRouter);
+app.use("/api/investors", investorsRouter);
 
 // Home route
 app.get("/", (req, res) => {
@@ -39,13 +37,15 @@ app.get("/", (req, res) => {
 app.use((err, req, res, next) => {
   res.status(500).json({
     success: false,
-    message: "Internal Server Error",
-    error: process.env.NODE_ENV === "development" ? err.message : undefined
+    message: "Internal server error",
+    error: process.env.NODE_ENV === 'development' ? err.message : undefined
   });
 });
 
 // Start server
 const PORT = process.env.PORT || 3001;
 app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`);
+  console.log(`🚀 Server running on port ${PORT}`);
 });
+
+export default app;
