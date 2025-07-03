@@ -1,6 +1,5 @@
 import React from 'react'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
-import AutoHideHeader from './components/landing/auto-hide-header'
 import { InvestorDashboard } from './components/ui/investor-dashboard'
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";

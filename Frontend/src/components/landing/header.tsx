@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Button } from "@/components/ui/button";
 import { motion, AnimatePresence } from "framer-motion";
+import { SignedIn, SignedOut, SignInButton, UserButton } from '@clerk/clerk-react';
 
 const Header = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -126,29 +127,55 @@ const Header = () => {
                 </div>
               </motion.div>
               
-              {/* Sign In - positioned outside floating navbar */}
+              {/* Authentication section - positioned outside floating navbar */}
               <motion.div 
                 className="flex items-center relative"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ delay: 0.5, duration: 0.5 }}
               >
-                {/* Button glow effect */}
-                <div className="absolute inset-0 bg-[#5e0e9e]/30 blur-md rounded-lg -z-10"></div>
-                
-                <motion.div 
-                  whileHover={{ scale: 1.05 }} 
-                  whileTap={{ scale: 0.95 }}
-                  className="relative"
-                >
-                  <div className="absolute -inset-0.5 bg-gradient-to-r from-[#5e0e9e] to-[#8e1cb3] rounded-lg blur-sm"></div>
-                  <Button 
-                    variant="default" 
-                    className="relative bg-black/80 hover:bg-black/60 border border-[#8e1cb3]/50 text-white rounded-lg"
+                <SignedOut>
+                  {/* Button glow effect */}
+                  <div className="absolute inset-0 bg-[#5e0e9e]/30 blur-md rounded-lg -z-10"></div>
+                  
+                  <motion.div 
+                    whileHover={{ scale: 1.05 }} 
+                    whileTap={{ scale: 0.95 }}
+                    className="relative"
                   >
-                    Sign In
-                  </Button>
-                </motion.div>
+                    <div className="absolute -inset-0.5 bg-gradient-to-r from-[#5e0e9e] to-[#8e1cb3] rounded-lg blur-sm"></div>
+                    <SignInButton mode="modal">
+                      <Button 
+                        variant="default" 
+                        className="relative bg-black/80 hover:bg-black/60 border border-[#8e1cb3]/50 text-white rounded-lg"
+                      >
+                        Sign In
+                      </Button>
+                    </SignInButton>
+                  </motion.div>
+                </SignedOut>
+                
+                <SignedIn>
+                  <motion.div 
+                    whileHover={{ scale: 1.05 }} 
+                    whileTap={{ scale: 0.95 }}
+                    className="relative"
+                  >
+                    {/* User button glow effect */}
+                    <div className="absolute -inset-2 bg-[#5e0e9e]/20 blur-lg rounded-full -z-10"></div>
+                    <UserButton 
+                      appearance={{
+                        elements: {
+                          avatarBox: "w-10 h-10 border-2 border-[#8e1cb3]/50 hover:border-[#8e1cb3] transition-colors duration-200",
+                          userButtonPopoverCard: "bg-black/90 backdrop-blur-xl border border-zinc-800/70",
+                          userButtonPopoverActionButton: "text-zinc-300 hover:text-white hover:bg-[#5e0e9e]/20",
+                          userButtonPopoverActionButtonText: "text-zinc-300",
+                          userButtonPopoverFooter: "border-t border-zinc-800/70"
+                        }
+                      }}
+                    />
+                  </motion.div>
+                </SignedIn>
               </motion.div>
             </div>
           </div>

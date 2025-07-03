@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const { getAllInvestors, getInvestorsList, getInvestorById } = require("../controllers/investors");
+const { getAllInvestors, getInvestorsList, getInvestorById } = require("../controllers/investorController");
 
 // Get all investors data (unmasked - admin use)
 router.get("/all", getAllInvestors);
