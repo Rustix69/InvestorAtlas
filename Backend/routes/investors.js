@@ -1,5 +1,5 @@
-import express from 'express';
-import { getAllInvestors, getInvestorsList, getInvestorById } from '../controllers/investorController.js';
+const express = require("express");
+const { getAllInvestors, getInvestorsList, getInvestorById } = require("../controllers/investorController");
 
 const router = express.Router();
 
@@ -12,4 +12,4 @@ router.get("/list", getInvestorsList);
 // Get specific investor details by ID (for detail view)
 router.get("/:id", getInvestorById);
 
-export default router; 
+module.exports = router;

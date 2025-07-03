@@ -1,4 +1,4 @@
-import pool from '../config/db.js';
+const { pool } = require('../config/db');
 
 // Helper function to mask investor name
 const maskName = (name) => {
@@ -158,7 +158,7 @@ const getInvestorById = async (req, res) => {
   }
 };
 
-export {
+module.exports = {
   getAllInvestors,
   getInvestorsList,
   getInvestorById

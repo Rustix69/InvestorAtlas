@@ -1,7 +1,7 @@
-import { razorpay } from '../config/razorpay.js';
-import crypto from 'crypto';
+const { razorpay } = require("../config/razorpay");
+const crypto = require("crypto");
 
-export const createOrder = async (req, res) => {
+const createOrder = async (req, res) => {
   try {
     const { amount } = req.body;
     
@@ -48,7 +48,7 @@ export const createOrder = async (req, res) => {
   }
 };
 
-export const verifyPayment = async (req, res) => {
+const verifyPayment = async (req, res) => {
   try {
     const { razorpay_order_id, razorpay_payment_id, razorpay_signature } = req.body;
     
@@ -102,3 +102,5 @@ export const verifyPayment = async (req, res) => {
     });
   }
 };
+
+module.exports = { createOrder, verifyPayment };
