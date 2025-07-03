@@ -1,11 +1,13 @@
 import React from 'react';
 import { Button } from "@/components/ui/button";
-import { ChevronRight, Calendar, Search } from "lucide-react";
+import { ChevronRight, Calendar, Search, LogIn } from "lucide-react";
 import InvestorDashboardMockup from "@/components/ui/investor-dashboard-mockup";
 import { motion } from "framer-motion";
-import PaymentButton from "@/components/payment-button";
+import { SignInButton, useUser } from "@clerk/clerk-react";
 
 const Hero = () => {
+  const { isSignedIn } = useUser();
+
   // Animation variants
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -145,13 +147,31 @@ const Hero = () => {
               Find Investors
             </Button>
           </motion.div>
-          
-          <motion.div
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-          >
-            <PaymentButton />
-          </motion.div>
+
+          {!isSignedIn && (
+            <motion.div
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+            >
+              <SignInButton mode="modal">
+                <Button
+                  variant="outline"
+                  className="w-full sm:w-auto flex items-center gap-2 
+                    bg-transparent
+                    text-white 
+                    font-medium
+                    px-6 py-6 
+                    hover:bg-white/10
+                    border-[1px] border-[#8e1cb3]/50
+                    shadow-md
+                    rounded-xl"
+                >
+                  <LogIn size={18} />
+                  Sign In
+                </Button>
+              </SignInButton>
+            </motion.div>
+          )}
         </motion.div>
 
         {/* Dashboard Preview */}

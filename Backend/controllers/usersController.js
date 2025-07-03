@@ -5,24 +5,13 @@ const syncUser = async (req, res) => {
   const { userId, email, name } = req.body;
 
   if (!userId || !email) {
-    return res.status(400).json({ 
+    return res.status(400).json({
       success: false,
-      error: "Missing required fields: userId and email are required" 
+      error: "Missing required fields: userId and email are required"
     });
   }
 
   try {
-    // Create users table if it doesn't exist
-    await pool.query(`
-      CREATE TABLE IF NOT EXISTS users (
-        id VARCHAR(255) PRIMARY KEY,
-        email VARCHAR(255) NOT NULL UNIQUE,
-        name VARCHAR(255),
-        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-        updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-      )
-    `);
-
     // Insert or update user data
     const result = await pool.query(
       `
@@ -37,14 +26,14 @@ const syncUser = async (req, res) => {
       [userId, email, name || null]
     );
 
-    res.json({ 
+    res.json({
       success: true,
       message: "User synced successfully",
       user: result.rows[0]
     });
   } catch (err) {
     console.error("Error syncing user:", err);
-    res.status(500).json({ 
+    res.status(500).json({
       success: false,
       error: "Database error",
       details: process.env.NODE_ENV === 'development' ? err.message : undefined
@@ -57,32 +46,32 @@ const getUserById = async (req, res) => {
   const { userId } = req.params;
 
   if (!userId) {
-    return res.status(400).json({ 
+    return res.status(400).json({
       success: false,
-      error: "User ID is required" 
+      error: "User ID is required"
     });
   }
 
   try {
     const result = await pool.query(
-      'SELECT id, email, name, created_at, updated_at FROM users WHERE id = $1',
+      'SELECT id, email, name, credits, created_at, updated_at FROM users WHERE id = $1',
       [userId]
     );
 
     if (result.rows.length === 0) {
-      return res.status(404).json({ 
+      return res.status(404).json({
         success: false,
-        error: "User not found" 
+        error: "User not found"
       });
     }
 
-    res.json({ 
+    res.json({
       success: true,
       user: result.rows[0]
     });
   } catch (err) {
     console.error("Error fetching user:", err);
-    res.status(500).json({ 
+    res.status(500).json({
       success: false,
       error: "Database error",
       details: process.env.NODE_ENV === 'development' ? err.message : undefined
@@ -94,17 +83,17 @@ const getUserById = async (req, res) => {
 const getAllUsers = async (req, res) => {
   try {
     const result = await pool.query(
-      'SELECT id, email, name, created_at, updated_at FROM users ORDER BY created_at DESC'
+      'SELECT id, email, name, credits, created_at, updated_at FROM users ORDER BY created_at DESC'
     );
 
-    res.json({ 
+    res.json({
       success: true,
       users: result.rows,
       count: result.rows.length
     });
   } catch (err) {
     console.error("Error fetching users:", err);
-    res.status(500).json({ 
+    res.status(500).json({
       success: false,
       error: "Database error",
       details: process.env.NODE_ENV === 'development' ? err.message : undefined
@@ -112,7 +101,7 @@ const getAllUsers = async (req, res) => {
   }
 };
 
-module.exports = { 
+module.exports = {
   syncUser,
   getUserById,
   getAllUsers

@@ -1,9 +1,10 @@
 const { razorpay } = require("../config/razorpay");
 const crypto = require("crypto");
+const { pool } = require("../config/db");
 
 const createOrder = async (req, res) => {
   try {
-    const { amount } = req.body;
+    const { amount, planId, planName, userId, userEmail, userName } = req.body;
     
     if (!amount || isNaN(amount) || amount <= 0) {
       return res.status(400).json({
@@ -12,20 +13,64 @@ const createOrder = async (req, res) => {
       });
     }
 
+    // Validate required fields
+    if (!userId || !userEmail) {
+      return res.status(400).json({
+        success: false,
+        message: "User information is required"
+      });
+    }
+
+    if (!planId || !planName) {
+      return res.status(400).json({
+        success: false,
+        message: "Plan information is required"
+      });
+    }
+
     const orderOptions = {
       amount: amount * 100,
       currency: "INR",
       receipt: `receipt_${Date.now()}`,
-      payment_capture: 1
+      payment_capture: 1,
+      notes: {
+        userId,
+        userEmail,
+        userName,
+        planId,
+        planName
+      }
     };
     
     const order = await razorpay.orders.create(orderOptions);
+
+    // Store order information in database
+    await pool.query(
+      `INSERT INTO orders (
+        order_id,
+        user_id,
+        plan_id,
+        plan_name,
+        amount,
+        currency,
+        status
+      ) VALUES ($1, $2, $3, $4, $5, $6, $7)`,
+      [
+        order.id,
+        userId,
+        planId,
+        planName,
+        amount,
+        order.currency,
+        'created'
+      ]
+    );
 
     res.status(200).json({
       success: true,
       order
     });
-    console.log("Order created successfully");
+    console.log("Order created successfully for plan:", planName);
   } catch (error) {
     if (error.statusCode === 401 || 
         (error.error && error.error.code === 'BAD_REQUEST_ERROR') ||
@@ -50,7 +95,14 @@ const createOrder = async (req, res) => {
 
 const verifyPayment = async (req, res) => {
   try {
-    const { razorpay_order_id, razorpay_payment_id, razorpay_signature } = req.body;
+    const { 
+      razorpay_order_id, 
+      razorpay_payment_id, 
+      razorpay_signature,
+      userId,
+      planId,
+      planName
+    } = req.body;
     
     if (!razorpay_order_id || !razorpay_payment_id || !razorpay_signature) {
       return res.status(400).json({
@@ -71,6 +123,39 @@ const verifyPayment = async (req, res) => {
     if (isValid) {
       try {
         const paymentDetails = await razorpay.payments.fetch(razorpay_payment_id);
+        
+        // Update order status and store payment details
+        await pool.query(
+          `UPDATE orders 
+           SET status = $1,
+               payment_id = $2,
+               payment_signature = $3,
+               payment_status = $4,
+               payment_method = $5,
+               updated_at = CURRENT_TIMESTAMP
+           WHERE order_id = $6`,
+          [
+            'completed',
+            razorpay_payment_id,
+            razorpay_signature,
+            paymentDetails.status,
+            paymentDetails.method,
+            razorpay_order_id
+          ]
+        );
+
+        // Update user's subscription status
+        await pool.query(
+          `UPDATE users 
+           SET current_plan = $1,
+               subscription_status = 'active',
+               subscription_start_date = CURRENT_TIMESTAMP,
+               subscription_end_date = CURRENT_TIMESTAMP + INTERVAL '1 month',
+               updated_at = CURRENT_TIMESTAMP
+           WHERE id = $2`,
+          [planId, userId]
+        );
+
         console.log("Payment Details:", {
           id: paymentDetails.id,
           status: paymentDetails.status,
@@ -78,10 +163,12 @@ const verifyPayment = async (req, res) => {
           currency: paymentDetails.currency,
           method: paymentDetails.method,
           order_id: paymentDetails.order_id,
+          plan: planName,
+          user: userId,
           created_at: new Date(paymentDetails.created_at * 1000).toISOString()
         });
       } catch (error) {
-        console.log("Note: Could not fetch payment details", error.message);
+        console.error("Error updating database:", error.message);
       }
       
       res.status(200).json({

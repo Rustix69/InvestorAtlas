@@ -1,7 +1,51 @@
 import React from 'react';
-import { Button } from "@/components/ui/button";
 import { Check } from "lucide-react";
 import { motion } from "framer-motion";
+import PaymentButton from "@/components/payment-button";
+
+const PLANS = {
+  FREE: {
+    id: 'free',
+    name: 'Free Plan',
+    amount: 0,
+    features: [
+      '10K events/month included',
+      'Multi-Channel Support: Email, In-app, SMS, Chat, Push',
+      'EU or US Data-residency',
+      'Up to 20 Workflows',
+      '2 Environments',
+      'Activity Feed Retention: 24 hours'
+    ]
+  },
+  PRO: {
+    id: 'pro',
+    name: 'Pro Plan',
+    amount: 1200, // $12.00
+    features: [
+      'Everything in Free, plus:',
+      'Unlimited events/month',
+      'Advanced Analytics & Reporting',
+      'Custom Branding',
+      'Priority Support',
+      'Unlimited Workflows',
+      'Activity Feed Retention: 1 year'
+    ]
+  },
+  TEAM: {
+    id: 'team',
+    name: 'Team Plan',
+    amount: 1200, // $12.00 per user
+    features: [
+      'Everything in Pro, plus:',
+      'Team Collaboration Features',
+      'Role-Based Access Control',
+      'Audit Logs',
+      'SSO Integration',
+      'Dedicated Account Manager',
+      'Custom Contract Terms'
+    ]
+  }
+};
 
 const Pricing = () => {
   const containerVariants = {
@@ -79,23 +123,6 @@ const Pricing = () => {
             variants={cardVariants}
             whileHover={{ y: -10, transition: { duration: 0.3 } }}
           >
-            <div className="absolute top-2 right-2 flex gap-1">
-              {[...Array(8)].map((_, i) => (
-                <motion.span 
-                  key={i} 
-                  className="w-[3px] h-[3px] bg-white/70 rounded-full opacity-70"
-                  animate={{ 
-                    opacity: [0.7, 0.3, 0.7],
-                    scale: [1, 1.2, 1]
-                  }}
-                  transition={{
-                    repeat: Infinity,
-                    duration: 3,
-                    delay: i * 0.2,
-                  }}
-                />
-              ))}
-            </div>
             <div className="mb-4 relative z-10">
               <motion.h3 
                 className="text-xl font-bold text-white mb-1 font-satoshi"
@@ -118,8 +145,10 @@ const Pricing = () => {
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
               >
-                <Button 
-                  variant="outline" 
+                <PaymentButton 
+                  amount={PLANS.FREE.amount}
+                  planId={PLANS.FREE.id}
+                  planName={PLANS.FREE.name}
                   className="w-full mb-4 
                     border-zinc-700 
                     text-white 
@@ -129,9 +158,7 @@ const Pricing = () => {
                     hover:text-white 
                     transition-colors 
                     duration-300"
-                >
-                  Start Building
-                </Button>
+                />
               </motion.div>
               <motion.p 
                 className="text-notifyhub-text-body text-sm text-center"
@@ -139,7 +166,7 @@ const Pricing = () => {
                 animate={{ opacity: 1 }}
                 transition={{ delay: 0.4 }}
               >
-                Start for free. Essential features, no limits on subscribers.
+                Start for free. Essential features included.
               </motion.p>
             </div>
             
@@ -150,14 +177,7 @@ const Pricing = () => {
               animate="visible"
               transition={{ staggerChildren: 0.1, delayChildren: 0.5 }}
             >
-              {[
-                '10K events/month included',
-                'Multi-Channel Support: Email, In-app, SMS, Chat, Push',
-                'EU or US Data-residency',
-                'Up to 20 Workflows',
-                '2 Environments',
-                'Activity Feed Retention: 24 hours'
-              ].map((feature, i) => (
+              {PLANS.FREE.features.map((feature, i) => (
                 <motion.li 
                   key={i} 
                   className="flex items-start"
@@ -189,24 +209,6 @@ const Pricing = () => {
             transition={{ type: "spring", stiffness: 100, damping: 15, delay: 0.2 }}
             whileHover={{ y: -10, scale: 1.03, transition: { duration: 0.3 } }}
           >
-            <div className="absolute top-2 right-2 flex gap-1">
-              {[...Array(8)].map((_, i) => (
-                <motion.span 
-                  key={i} 
-                  className="w-[3px] h-[3px] bg-white/70 rounded-full opacity-70"
-                  animate={{ 
-                    opacity: [0.7, 0.3, 0.7],
-                    scale: [1, 1.2, 1]
-                  }}
-                  transition={{
-                    repeat: Infinity,
-                    duration: 3,
-                    delay: i * 0.2,
-                  }}
-                />
-              ))}
-            </div>
-
             <div className="mb-4 relative z-10">
               <motion.h3 
                 className="text-xl font-bold text-white mb-1 font-satoshi"
@@ -229,8 +231,10 @@ const Pricing = () => {
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
               >
-                <Button 
-                  variant="default" 
+                <PaymentButton 
+                  amount={PLANS.PRO.amount}
+                  planId={PLANS.PRO.id}
+                  planName={PLANS.PRO.name}
                   className="w-full mb-4 
                     bg-[#5e0e9e] 
                     text-white
@@ -241,9 +245,7 @@ const Pricing = () => {
                     rounded-xl
                     transition-colors 
                     duration-300"
-                >
-                  Start Free Trial
-                </Button>
+                />
               </motion.div>
               <motion.p 
                 className="text-notifyhub-text-body text-sm text-center"
@@ -251,7 +253,7 @@ const Pricing = () => {
                 animate={{ opacity: 1 }}
                 transition={{ delay: 0.4 }}
               >
-                Start for free. Essential features, no limits on subscribers.
+                Perfect for growing businesses.
               </motion.p>
             </div>
             
@@ -262,11 +264,7 @@ const Pricing = () => {
               animate="visible"
               transition={{ staggerChildren: 0.1, delayChildren: 0.5 }}
             >
-              {[
-                'Everything in Free, plus...',
-                '30K events/month included',
-                'Activity Feed Retention: 7 days'
-              ].map((feature, i) => (
+              {PLANS.PRO.features.map((feature, i) => (
                 <motion.li 
                   key={i} 
                   className="flex items-start"
@@ -292,23 +290,6 @@ const Pricing = () => {
             variants={cardVariants}
             whileHover={{ y: -10, transition: { duration: 0.3 } }}
           >
-            <div className="absolute top-2 right-2 flex gap-1">
-              {[...Array(8)].map((_, i) => (
-                <motion.span 
-                  key={i} 
-                  className="w-[3px] h-[3px] bg-white/70 rounded-full opacity-70"
-                  animate={{ 
-                    opacity: [0.7, 0.3, 0.7],
-                    scale: [1, 1.2, 1]
-                  }}
-                  transition={{
-                    repeat: Infinity,
-                    duration: 3,
-                    delay: i * 0.2,
-                  }}
-                />
-              ))}
-            </div>
             <div className="mb-4 relative z-10">
               <motion.h3 
                 className="text-xl font-bold text-white mb-1 font-satoshi"
@@ -331,8 +312,10 @@ const Pricing = () => {
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
               >
-                <Button 
-                  variant="outline" 
+                <PaymentButton 
+                  amount={PLANS.TEAM.amount}
+                  planId={PLANS.TEAM.id}
+                  planName={PLANS.TEAM.name}
                   className="w-full mb-4 
                     bg-[#5e0e9e] 
                     text-white 
@@ -343,9 +326,7 @@ const Pricing = () => {
                     rounded-xl
                     transition-colors 
                     duration-300"
-                >
-                  Start Free Trial
-                </Button>
+                />
               </motion.div>
               <motion.p 
                 className="text-notifyhub-text-body text-sm text-center"
@@ -353,7 +334,7 @@ const Pricing = () => {
                 animate={{ opacity: 1 }}
                 transition={{ delay: 0.4 }}
               >
-                Start for free. Essential features, no limits on subscribers.
+                For teams that need more control and features.
               </motion.p>
             </div>
             
@@ -364,14 +345,7 @@ const Pricing = () => {
               animate="visible"
               transition={{ staggerChildren: 0.1, delayChildren: 0.5 }}
             >
-              {[
-                'Everything in Pro, plus...',
-                '250K events/month included',
-                'Up to 10 Environments',
-                'Activity Feed Retention: 90 days',
-                'Unlimited Team Members',
-                'Unlimited Workflows'
-              ].map((feature, i) => (
+              {PLANS.TEAM.features.map((feature, i) => (
                 <motion.li 
                   key={i} 
                   className="flex items-start"
