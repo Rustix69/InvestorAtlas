@@ -14,7 +14,7 @@ const getAllInvestors = async (req, res) => {
   try {
     // Query to get all data from InvestorsV01 table with row number as ID
     const result = await pool.query(`
-      SELECT ROW_NUMBER() OVER (ORDER BY "Full Name") as id, *
+      SELECT ROW_NUMBER() OVER (ORDER BY "Full Name") as row_id, *
       FROM "InvestorsV01"
     `);
     
@@ -40,7 +40,7 @@ const getInvestorsList = async (req, res) => {
   try {
     // Query to get basic info from InvestorsV01 table with row number as ID
     const result = await pool.query(`
-      SELECT ROW_NUMBER() OVER (ORDER BY "Full Name") as id, *
+      SELECT ROW_NUMBER() OVER (ORDER BY "Full Name") as row_id, *
       FROM "InvestorsV01"
     `);
     
@@ -128,11 +128,11 @@ const getInvestorById = async (req, res) => {
     // Query to get specific investor data by row number
     const result = await pool.query(`
       WITH numbered_rows AS (
-        SELECT ROW_NUMBER() OVER (ORDER BY "Full Name") as id, *
+        SELECT ROW_NUMBER() OVER (ORDER BY "Full Name") as row_id, *
         FROM "InvestorsV01"
       )
       SELECT * FROM numbered_rows
-      WHERE id = $1
+      WHERE row_id = $1
     `, [id]);
     
     if (result.rows.length === 0) {

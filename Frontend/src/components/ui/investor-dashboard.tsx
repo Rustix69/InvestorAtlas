@@ -170,7 +170,7 @@ export function InvestorDashboard() {
         // Update the investor in the list with detailed data
         setInvestors(prevInvestors => 
           prevInvestors.map(investor => {
-            if (investor.id === investorId) {
+            if (investor.row_id === investorId) {
               return {
                 ...investor,
                 ...detailedInvestor,
@@ -195,7 +195,7 @@ export function InvestorDashboard() {
         // Remove revealing flag
         setInvestors(prevInvestors => 
           prevInvestors.map(investor => {
-            if (investor.id === investorId) {
+            if (investor.row_id === investorId) {
               return {
                 ...investor,
                 isRevealing: false
@@ -378,7 +378,7 @@ export function InvestorDashboard() {
                     <div className="sm:hidden space-y-4 p-4">
                       {currentInvestors.map((investor) => (
                         <Card 
-                          key={investor.id} 
+                          key={investor.row_id} 
                           className="bg-zinc-900 border-zinc-800 hover:bg-zinc-800/50 transition-colors duration-300"
                         >
                           <CardHeader className="pb-2">
@@ -392,14 +392,14 @@ export function InvestorDashboard() {
                                 <div>
                                   <h3 className="text-white font-semibold">
                                     <ScrambleText 
-                                      originalText={investors.find(orig => orig.id === investor.id && !revealedInvestors.has(investor.id))?.["Full Name"] || investor["Full Name"]}
+                                      originalText={investors.find(orig => orig.row_id === investor.row_id && !revealedInvestors.has(investor.row_id))?.["Full Name"] || investor["Full Name"]}
                                       targetText={investor["Full Name"]}
                                       isScrambling={investor.isRevealing}
                                     />
                                   </h3>
                                   <p className="text-xs text-zinc-400">
                                     <ScrambleText 
-                                      originalText={investors.find(orig => orig.id === investor.id && !revealedInvestors.has(investor.id))?.["Title"] || investor["Title"]}
+                                      originalText={investors.find(orig => orig.row_id === investor.row_id && !revealedInvestors.has(investor.row_id))?.["Title"] || investor["Title"]}
                                       targetText={investor["Title"]}
                                       isScrambling={investor.isRevealing}
                                     />
@@ -407,7 +407,7 @@ export function InvestorDashboard() {
                                   <div className="flex items-center text-xs text-zinc-400 mt-1">
                                     <MapPin className="h-3 w-3 mr-1 text-zinc-500" />
                                     <ScrambleText 
-                                      originalText={investors.find(orig => orig.id === investor.id && !revealedInvestors.has(investor.id))?.["Country"] || investor["Country"]}
+                                      originalText={investors.find(orig => orig.row_id === investor.row_id && !revealedInvestors.has(investor.row_id))?.["Country"] || investor["Country"]}
                                       targetText={investor["Country"]}
                                       isScrambling={investor.isRevealing}
                                     />
@@ -422,7 +422,7 @@ export function InvestorDashboard() {
                                 <Building className="h-4 w-4 text-zinc-500" />
                                 <span className="text-sm">
                                   <ScrambleText 
-                                    originalText={investors.find(orig => orig.id === investor.id && !revealedInvestors.has(investor.id))?.["Venture Capital Name"] || investor["Venture Capital Name"]}
+                                    originalText={investors.find(orig => orig.row_id === investor.row_id && !revealedInvestors.has(investor.row_id))?.["Venture Capital Name"] || investor["Venture Capital Name"]}
                                     targetText={investor["Venture Capital Name"]}
                                     isScrambling={investor.isRevealing}
                                   />
@@ -430,7 +430,7 @@ export function InvestorDashboard() {
                               </div>
                               <p className="text-sm text-zinc-400 line-clamp-3">
                                 <ScrambleText 
-                                  originalText={investors.find(orig => orig.id === investor.id && !revealedInvestors.has(investor.id))?.["Headline"] || investor["Headline"]}
+                                  originalText={investors.find(orig => orig.row_id === investor.row_id && !revealedInvestors.has(investor.row_id))?.["Headline"] || investor["Headline"]}
                                   targetText={investor["Headline"]}
                                   isScrambling={investor.isRevealing}
                                 />
@@ -442,7 +442,7 @@ export function InvestorDashboard() {
                                   <Mail className="h-3 w-3 text-zinc-500" />
                                   <a href={`mailto:${investor["Email"]}`} className="hover:text-[#8e1cb3] transition-colors">
                                     <ScrambleText 
-                                      originalText={investors.find(orig => orig.id === investor.id && !revealedInvestors.has(investor.id))?.["Email"] || investor["Email"]}
+                                      originalText={investors.find(orig => orig.row_id === investor.row_id && !revealedInvestors.has(investor.row_id))?.["Email"] || investor["Email"]}
                                       targetText={investor["Email"]}
                                       isScrambling={investor.isRevealing}
                                     />
@@ -452,7 +452,7 @@ export function InvestorDashboard() {
                                   <Phone className="h-3 w-3 text-zinc-500" />
                                   <span>
                                     <ScrambleText 
-                                      originalText={investors.find(orig => orig.id === investor.id && !revealedInvestors.has(investor.id))?.["Phone"] || investor["Phone"]}
+                                      originalText={investors.find(orig => orig.row_id === investor.row_id && !revealedInvestors.has(investor.row_id))?.["Phone"] || investor["Phone"]}
                                       targetText={investor["Phone"]}
                                       isScrambling={investor.isRevealing}
                                     />
@@ -460,7 +460,7 @@ export function InvestorDashboard() {
                                 </div>
                                 <div className="flex items-center gap-2 text-sm text-zinc-300">
                                   <ExternalLink className="h-3 w-3 text-zinc-500" />
-                                  {revealedInvestors.has(investor.id) ? (
+                                  {revealedInvestors.has(investor.row_id) ? (
                                     <a 
                                       href={investor["Linkedin URL"]} 
                                       target="_blank" 
@@ -486,7 +486,7 @@ export function InvestorDashboard() {
                                 </div>
                                 <div className="flex items-center gap-2 text-sm text-zinc-300">
                                   <Globe className="h-3 w-3 text-zinc-500" />
-                                  {revealedInvestors.has(investor.id) ? (
+                                  {revealedInvestors.has(investor.row_id) ? (
                                     <a 
                                       href={investor["Website"]} 
                                       target="_blank" 
@@ -494,7 +494,7 @@ export function InvestorDashboard() {
                                       className="hover:text-[#8e1cb3] transition-colors"
                                     >
                                       <ScrambleText 
-                                        originalText={investors.find(orig => orig.id === investor.id && !revealedInvestors.has(investor.id))?.["Website"] || investor["Website"]}
+                                        originalText={investors.find(orig => orig.row_id === investor.row_id && !revealedInvestors.has(investor.row_id))?.["Website"] || investor["Website"]}
                                         targetText={investor["Website"]}
                                         isScrambling={investor.isRevealing}
                                       />
@@ -505,7 +505,7 @@ export function InvestorDashboard() {
                                         <TooltipTrigger asChild>
                                           <span className="text-zinc-500 cursor-not-allowed">
                                             <ScrambleText 
-                                              originalText={investors.find(orig => orig.id === investor.id && !revealedInvestors.has(investor.id))?.["Website"] || investor["Website"]}
+                                              originalText={investors.find(orig => orig.row_id === investor.row_id && !revealedInvestors.has(investor.row_id))?.["Website"] || investor["Website"]}
                                               targetText={investor["Website"]}
                                               isScrambling={investor.isRevealing}
                                             />
@@ -538,15 +538,15 @@ export function InvestorDashboard() {
                             <Button 
                               size="sm" 
                               className="w-full bg-[#5e0e9e] hover:bg-[#500c83] text-white border border-[#8e1cb3] disabled:opacity-50"
-                              onClick={() => handleRevealInvestor(investor.id)}
-                              disabled={revealedInvestors.has(investor.id) || revealingInvestors.has(investor.id)}
+                              onClick={() => handleRevealInvestor(investor.row_id)}
+                              disabled={revealedInvestors.has(investor.row_id) || revealingInvestors.has(investor.row_id)}
                             >
-                              {revealingInvestors.has(investor.id) ? (
+                              {revealingInvestors.has(investor.row_id) ? (
                                 <div className="flex items-center gap-2">
                                   <div className="animate-spin h-3 w-3 border border-white border-t-transparent rounded-full"></div>
                                   Revealing...
                                 </div>
-                              ) : revealedInvestors.has(investor.id) ? (
+                              ) : revealedInvestors.has(investor.row_id) ? (
                                 "Revealed"
                               ) : (
                                 "View Details"
@@ -569,7 +569,7 @@ export function InvestorDashboard() {
                        </div>
                       {currentInvestors.map((investor) => (
                         <div
-                          key={investor.id}
+                          key={investor.row_id}
                           className="grid grid-cols-12 gap-4 border-b border-zinc-800 p-4 last:border-0 hover:bg-zinc-800/20"
                         >
                           <div className="col-span-3">
@@ -582,14 +582,14 @@ export function InvestorDashboard() {
                                                              <div>
                                  <div className="font-medium text-white">
                                    <ScrambleText 
-                                     originalText={investors.find(orig => orig.id === investor.id && !revealedInvestors.has(investor.id))?.["Full Name"] || investor["Full Name"]}
+                                     originalText={investors.find(orig => orig.row_id === investor.row_id && !revealedInvestors.has(investor.row_id))?.["Full Name"] || investor["Full Name"]}
                                      targetText={investor["Full Name"]}
                                      isScrambling={investor.isRevealing}
                                    />
                                  </div>
                                  <div className="text-xs text-zinc-400">
                                    <ScrambleText 
-                                     originalText={investors.find(orig => orig.id === investor.id && !revealedInvestors.has(investor.id))?.["Title"] || investor["Title"]}
+                                     originalText={investors.find(orig => orig.row_id === investor.row_id && !revealedInvestors.has(investor.row_id))?.["Title"] || investor["Title"]}
                                      targetText={investor["Title"]}
                                      isScrambling={investor.isRevealing}
                                    />
@@ -597,7 +597,7 @@ export function InvestorDashboard() {
                                  <div className="flex items-center text-xs text-zinc-400 mt-1">
                                    <MapPin className="h-3 w-3 mr-1 text-zinc-500" />
                                    <ScrambleText 
-                                     originalText={investors.find(orig => orig.id === investor.id && !revealedInvestors.has(investor.id))?.["Country"] || investor["Country"]}
+                                     originalText={investors.find(orig => orig.row_id === investor.row_id && !revealedInvestors.has(investor.row_id))?.["Country"] || investor["Country"]}
                                      targetText={investor["Country"]}
                                      isScrambling={investor.isRevealing}
                                    />
@@ -611,14 +611,14 @@ export function InvestorDashboard() {
                                <div>
                                  <div className="text-sm font-medium">
                                    <ScrambleText 
-                                     originalText={investors.find(orig => orig.id === investor.id && !revealedInvestors.has(investor.id))?.["Venture Capital Name"] || investor["Venture Capital Name"]}
+                                     originalText={investors.find(orig => orig.row_id === investor.row_id && !revealedInvestors.has(investor.row_id))?.["Venture Capital Name"] || investor["Venture Capital Name"]}
                                      targetText={investor["Venture Capital Name"]}
                                      isScrambling={investor.isRevealing}
                                    />
                                  </div>
                                  <div className="text-xs text-zinc-400 line-clamp-2">
                                    <ScrambleText 
-                                     originalText={investors.find(orig => orig.id === investor.id && !revealedInvestors.has(investor.id))?.["Headline"] || investor["Headline"]}
+                                     originalText={investors.find(orig => orig.row_id === investor.row_id && !revealedInvestors.has(investor.row_id))?.["Headline"] || investor["Headline"]}
                                      targetText={investor["Headline"]}
                                      isScrambling={investor.isRevealing}
                                    />
@@ -632,7 +632,7 @@ export function InvestorDashboard() {
                                  <Mail className="h-3 w-3 text-zinc-500" />
                                  <a href={`mailto:${investor["Email"]}`} className="hover:text-[#8e1cb3] transition-colors truncate">
                                    <ScrambleText 
-                                     originalText={investors.find(orig => orig.id === investor.id && !revealedInvestors.has(investor.id))?.["Email"] || investor["Email"]}
+                                     originalText={investors.find(orig => orig.row_id === investor.row_id && !revealedInvestors.has(investor.row_id))?.["Email"] || investor["Email"]}
                                      targetText={investor["Email"]}
                                      isScrambling={investor.isRevealing}
                                    />
@@ -642,7 +642,7 @@ export function InvestorDashboard() {
                                  <Phone className="h-3 w-3 text-zinc-500" />
                                  <span>
                                    <ScrambleText 
-                                     originalText={investors.find(orig => orig.id === investor.id && !revealedInvestors.has(investor.id))?.["Phone"] || investor["Phone"]}
+                                     originalText={investors.find(orig => orig.row_id === investor.row_id && !revealedInvestors.has(investor.row_id))?.["Phone"] || investor["Phone"]}
                                      targetText={investor["Phone"]}
                                      isScrambling={investor.isRevealing}
                                    />
@@ -652,7 +652,7 @@ export function InvestorDashboard() {
                                  <MapPin className="h-3 w-3 text-zinc-500" />
                                  <span>
                                    <ScrambleText 
-                                     originalText={investors.find(orig => orig.id === investor.id && !revealedInvestors.has(investor.id))?.["Country"] || investor["Country"]}
+                                     originalText={investors.find(orig => orig.row_id === investor.row_id && !revealedInvestors.has(investor.row_id))?.["Country"] || investor["Country"]}
                                      targetText={investor["Country"]}
                                      isScrambling={investor.isRevealing}
                                    />
@@ -664,7 +664,7 @@ export function InvestorDashboard() {
                              <div className="space-y-1">
                                <div className="flex items-center gap-2 text-xs text-zinc-300">
                                  <ExternalLink className="h-3 w-3 text-zinc-500" />
-                                 {revealedInvestors.has(investor.id) ? (
+                                 {revealedInvestors.has(investor.row_id) ? (
                                    <a 
                                      href={investor["Linkedin URL"]} 
                                      target="_blank" 
@@ -690,7 +690,7 @@ export function InvestorDashboard() {
                                </div>
                                <div className="flex items-center gap-2 text-xs text-zinc-300">
                                  <Globe className="h-3 w-3 text-zinc-500" />
-                                 {revealedInvestors.has(investor.id) ? (
+                                 {revealedInvestors.has(investor.row_id) ? (
                                    <a 
                                      href={investor["Website"]} 
                                      target="_blank" 
@@ -739,15 +739,15 @@ export function InvestorDashboard() {
                                size="sm" 
                                variant="outline" 
                                className="border-zinc-700 text-zinc-200 hover:bg-[#5e0e9e] hover:text-white hover:border-[#8e1cb3] disabled:opacity-50"
-                               onClick={() => handleRevealInvestor(investor.id)}
-                               disabled={revealedInvestors.has(investor.id) || revealingInvestors.has(investor.id)}
+                               onClick={() => handleRevealInvestor(investor.row_id)}
+                               disabled={revealedInvestors.has(investor.row_id) || revealingInvestors.has(investor.row_id)}
                              >
-                               {revealingInvestors.has(investor.id) ? (
+                               {revealingInvestors.has(investor.row_id) ? (
                                  <div className="flex items-center gap-1">
                                    <div className="animate-spin h-3 w-3 border border-zinc-200 border-t-transparent rounded-full"></div>
                                    <span className="hidden sm:inline">Revealing</span>
                                  </div>
-                               ) : revealedInvestors.has(investor.id) ? (
+                               ) : revealedInvestors.has(investor.row_id) ? (
                                  "Revealed"
                                ) : (
                                  "View"

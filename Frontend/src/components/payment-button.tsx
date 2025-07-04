@@ -212,7 +212,7 @@ const PaymentButton = ({ amount = 5000, planId, planName, className }: PaymentBu
           shadow-md
           rounded-xl ${className}`}
         onClick={handlePayment}
-        disabled={isLoading || isRazorpayLoading || !isLoaded}
+        disabled={isLoading || isRazorpayLoading || !isLoaded || !isSignedIn || !user}
       >
         <PiggyBank size={18} />
         Pay Now
