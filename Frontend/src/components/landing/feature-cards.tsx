@@ -54,7 +54,7 @@ const FeatureCards = () => {
           className="grid grid-cols-1 lg:grid-cols-2 gap-8"
           variants={containerVariants}
         >
-          {/* Fraud Pattern Intelligence Card */}
+          {/* Discover Investors Card */}
           <motion.div 
             className="feature-card"
             variants={cardVariants}
@@ -64,12 +64,7 @@ const FeatureCards = () => {
               className="mb-4 h-10 w-10 bg-notifyhub-primary/20 rounded-md flex items-center justify-center"
               variants={iconVariants}
             >
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-notifyhub-primary" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
-                <circle cx="9" cy="7" r="4"></circle>
-                <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
-                <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
-              </svg>
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-notifyhub-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2"><path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-4.35-4.35m0 0A7.5 7.5 0 104.5 4.5a7.5 7.5 0 0012.15 12.15z" /></svg>
             </motion.div>
             <motion.h3 
               className="text-2xl font-bold text-notifyhub-text-heading mb-3"
@@ -77,7 +72,7 @@ const FeatureCards = () => {
               animate={{ opacity: 1, x: 0 }}
               transition={{ delay: 0.3 }}
             >
-              Fraud Pattern Intelligence
+              Discover Investors Effortlessly
             </motion.h3>
             <motion.p 
               className="text-notifyhub-text-body mb-6"
@@ -85,9 +80,8 @@ const FeatureCards = () => {
               animate={{ opacity: 1 }}
               transition={{ delay: 0.4 }}
             >
-              Quickly identify fraud behavior across accounts using advanced graph-based AI models.
+              Instantly access a curated directory of 5,000+ VCs, angels, and micro-funds worldwide. Filter by sector, stage, location, and more to find your perfect match.
             </motion.p>
-            
             <motion.div 
               className="mb-6 p-4 rounded-lg bg-zinc-800/50 border border-zinc-700"
               initial={{ opacity: 0, scale: 0.95 }}
@@ -95,56 +89,22 @@ const FeatureCards = () => {
               transition={{ delay: 0.5 }}
             >
               <div className="flex flex-col space-y-3">
-                <motion.div 
-                  className="flex items-center justify-between"
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.6 }}
-                >
-                  <div className="flex items-center">
-                    <div className="h-4 w-4 rounded bg-notifyhub-primary/30 mr-3"></div>
-                    <span className="text-sm text-white">Email Notifications</span>
-                  </div>
-                  <div className="h-5 w-10 rounded-full bg-notifyhub-primary"></div>
-                </motion.div>
-                <motion.div 
-                  className="flex items-center justify-between"
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.7 }}
-                >
-                  <div className="flex items-center">
-                    <div className="h-4 w-4 rounded bg-purple-500/30 mr-3"></div>
-                    <span className="text-sm text-white">SMS Alerts</span>
-                  </div>
-                  <div className="h-5 w-10 rounded-full bg-zinc-700"></div>
-                </motion.div>
-                <motion.div 
-                  className="flex items-center justify-between"
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.8 }}
-                >
-                  <div className="flex items-center">
-                    <div className="h-4 w-4 rounded bg-blue-500/30 mr-3"></div>
-                    <span className="text-sm text-white">Push Notifications</span>
-                  </div>
-                  <div className="h-5 w-10 rounded-full bg-notifyhub-primary"></div>
-                </motion.div>
+                <div className="flex items-center"><div className="h-4 w-4 rounded bg-notifyhub-primary/30 mr-3"></div><span className="text-sm text-white">Advanced Search Filters</span></div>
+                <div className="flex items-center"><div className="h-4 w-4 rounded bg-purple-500/30 mr-3"></div><span className="text-sm text-white">Global Coverage</span></div>
+                <div className="flex items-center"><div className="h-4 w-4 rounded bg-blue-500/30 mr-3"></div><span className="text-sm text-white">Up-to-date Profiles</span></div>
               </div>
             </motion.div>
-            
             <motion.div
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
             >
               <Button variant="default" className="w-full sm:w-auto bg-[#5e0e9e] border-[#8e1cb3]">
-                Try For Free <ChevronRight size={16} />
+                Explore Now <ChevronRight size={16} />
               </Button>
             </motion.div>
           </motion.div>
           
-          {/* Tokenized Security Card */}
+          {/* Smart Fundraising Tools Card */}
           <motion.div 
             className="feature-card"
             variants={cardVariants}
@@ -154,10 +114,7 @@ const FeatureCards = () => {
               className="mb-4 h-10 w-10 bg-notifyhub-primary/20 rounded-md flex items-center justify-center"
               variants={iconVariants}
             >
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-notifyhub-primary" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
-                <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
-              </svg>
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-notifyhub-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2"><path strokeLinecap="round" strokeLinejoin="round" d="M9 17v-2a4 4 0 014-4h6m-6 0V7a4 4 0 014-4h2a4 4 0 014 4v6a4 4 0 01-4 4h-2a4 4 0 01-4-4z" /></svg>
             </motion.div>
             <motion.h3 
               className="text-2xl font-bold text-notifyhub-text-heading mb-3"
@@ -165,7 +122,7 @@ const FeatureCards = () => {
               animate={{ opacity: 1, x: 0 }}
               transition={{ delay: 0.3 }}
             >
-              Tokenized Security Layers
+              Smart Fundraising Tools
             </motion.h3>
             <motion.p 
               className="text-notifyhub-text-body mb-6"
@@ -173,64 +130,26 @@ const FeatureCards = () => {
               animate={{ opacity: 1 }}
               transition={{ delay: 0.4 }}
             >
-              Enable secure digital authentication with digestible reports and bundled updates sent via email or SMS.
+              Streamline your outreach with AI-powered email generation, CRM tracking, and real-time analytics. Manage your fundraising pipeline with ease.
             </motion.p>
-            
             <motion.div 
-              className="mb-6 p-4 rounded-lg bg-zinc-800/50 border border-zinc-700 overflow-hidden"
+              className="mb-6 p-4 rounded-lg bg-zinc-800/50 border border-zinc-700"
               initial={{ opacity: 0, scale: 0.95 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ delay: 0.5 }}
             >
               <div className="flex flex-col space-y-3">
-                <motion.div 
-                  className="flex items-center space-x-3"
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.6 }}
-                >
-                  <div className="h-8 w-8 bg-notifyhub-primary/30 rounded flex items-center justify-center">
-                    <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 text-notifyhub-primary" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                      <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
-                      <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
-                    </svg>
-                  </div>
-                  <div>
-                    <div className="text-xs text-notifyhub-text-body">Security Token</div>
-                    <div className="text-sm font-mono text-notifyhub-text-heading">•••• •••• •••• 1234</div>
-                  </div>
-                </motion.div>
-                <motion.div 
-                  className="h-4 bg-zinc-700/50 rounded-full overflow-hidden"
-                  initial={{ width: "0%" }}
-                  animate={{ width: "100%" }}
-                  transition={{ delay: 0.7, duration: 0.8 }}
-                >
-                  <motion.div 
-                    className="h-4 bg-gradient-to-r from-notifyhub-primary to-notifyhub-glow"
-                    initial={{ width: "0%" }}
-                    animate={{ width: "50%" }}
-                    transition={{ delay: 0.9, duration: 1.2 }}
-                  />
-                </motion.div>
-                <motion.div 
-                  className="flex justify-between"
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.8 }}
-                >
-                  <span className="text-xs text-notifyhub-text-body">Token expires in</span>
-                  <span className="text-xs font-medium text-notifyhub-primary">12:59</span>
-                </motion.div>
+                <div className="flex items-center"><div className="h-4 w-4 rounded bg-notifyhub-primary/30 mr-3"></div><span className="text-sm text-white">AI Outreach & Follow-ups</span></div>
+                <div className="flex items-center"><div className="h-4 w-4 rounded bg-purple-500/30 mr-3"></div><span className="text-sm text-white">CRM & Deal Tracking</span></div>
+                <div className="flex items-center"><div className="h-4 w-4 rounded bg-blue-500/30 mr-3"></div><span className="text-sm text-white">Deck Analytics</span></div>
               </div>
             </motion.div>
-            
             <motion.div
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
             >
               <Button variant="default" className="w-full sm:w-auto bg-[#5e0e9e] border-[#8e1cb3]">
-                Try For Free <ChevronRight size={16} />
+                Explore Now <ChevronRight size={16} />
               </Button>
             </motion.div>
           </motion.div>
