@@ -19,13 +19,15 @@ interface PaymentButtonProps {
   amount?: number;
   planId?: string;
   planName?: string;
+  tokens?: number;
   className?: string;
+  onPaymentSuccess?: (tokens: number) => void;
 }
 
 // API base URL - can be moved to an environment variable
 const API_BASE_URL = "http://localhost:3001/api/razorpay";
 
-const PaymentButton = ({ amount = 5000, planId, planName, className }: PaymentButtonProps) => {
+const PaymentButton = ({ amount, planId, planName, tokens = 0, className, onPaymentSuccess }: PaymentButtonProps) => {
   const { error, isLoading: isRazorpayLoading, Razorpay } = useRazorpay();
   const [isLoading, setIsLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
@@ -80,6 +82,7 @@ const PaymentButton = ({ amount = 5000, planId, planName, className }: PaymentBu
           amount,
           planId,
           planName,
+          tokens,
           userId: user.id,
           userEmail: user.primaryEmailAddress?.emailAddress,
           userName: user.fullName
@@ -145,7 +148,8 @@ const PaymentButton = ({ amount = 5000, planId, planName, className }: PaymentBu
                 razorpay_signature: response.razorpay_signature,
                 userId: user.id,
                 planId,
-                planName
+                planName,
+                tokens
               }),
             }).then(async res => {
               const verificationData = await res.json();
@@ -161,6 +165,11 @@ const PaymentButton = ({ amount = 5000, planId, planName, className }: PaymentBu
                   "User": user.fullName,
                   "Timestamp": new Date().toISOString()
                 });
+                
+                // Call the success callback to refresh credits
+                if (onPaymentSuccess) {
+                  onPaymentSuccess(tokens);
+                }
               } 
               
               if (isMounted.current) {

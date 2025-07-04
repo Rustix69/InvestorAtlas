@@ -35,7 +35,7 @@ const Integrations = () => {
     },
     {
       icon: <Globe2 className="w-5 h-5 text-[#ffff00]" />,
-      value: "50+",
+      value: "90+",
       label: "Countries"
     },
     {

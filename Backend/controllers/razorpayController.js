@@ -4,7 +4,7 @@ const { pool } = require("../config/db");
 
 const createOrder = async (req, res) => {
   try {
-    const { amount, planId, planName, userId, userEmail, userName } = req.body;
+    const { amount, planId, planName, tokens, userId, userEmail, userName } = req.body;
     
     if (!amount || isNaN(amount) || amount <= 0) {
       return res.status(400).json({
@@ -28,6 +28,13 @@ const createOrder = async (req, res) => {
       });
     }
 
+    if (!tokens || tokens < 0) {
+      return res.status(400).json({
+        success: false,
+        message: "Valid token amount is required"
+      });
+    }
+
     const orderOptions = {
       amount: amount * 100,
       currency: "INR",
@@ -38,7 +45,8 @@ const createOrder = async (req, res) => {
         userEmail,
         userName,
         planId,
-        planName
+        planName,
+        tokens
       }
     };
     
@@ -53,8 +61,9 @@ const createOrder = async (req, res) => {
         plan_name,
         amount,
         currency,
+        tokens,
         status
-      ) VALUES ($1, $2, $3, $4, $5, $6, $7)`,
+      ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8)`,
       [
         order.id,
         userId,
@@ -62,6 +71,7 @@ const createOrder = async (req, res) => {
         planName,
         amount,
         order.currency,
+        tokens,
         'created'
       ]
     );
@@ -70,7 +80,7 @@ const createOrder = async (req, res) => {
       success: true,
       order
     });
-    console.log("Order created successfully for plan:", planName);
+    console.log("Order created successfully for plan:", planName, "with", tokens, "tokens");
   } catch (error) {
     if (error.statusCode === 401 || 
         (error.error && error.error.code === 'BAD_REQUEST_ERROR') ||
@@ -101,7 +111,8 @@ const verifyPayment = async (req, res) => {
       razorpay_signature,
       userId,
       planId,
-      planName
+      planName,
+      tokens
     } = req.body;
     
     if (!razorpay_order_id || !razorpay_payment_id || !razorpay_signature) {
@@ -144,16 +155,17 @@ const verifyPayment = async (req, res) => {
           ]
         );
 
-        // Update user's subscription status
+        // Update user's credits and subscription status
         await pool.query(
           `UPDATE users 
-           SET current_plan = $1,
+           SET credits = credits + $1,
+               current_plan = $2,
                subscription_status = 'active',
                subscription_start_date = CURRENT_TIMESTAMP,
                subscription_end_date = CURRENT_TIMESTAMP + INTERVAL '1 month',
                updated_at = CURRENT_TIMESTAMP
-           WHERE id = $2`,
-          [planId, userId]
+           WHERE id = $3`,
+          [tokens, planId, userId]
         );
 
         console.log("Payment Details:", {
@@ -164,6 +176,7 @@ const verifyPayment = async (req, res) => {
           method: paymentDetails.method,
           order_id: paymentDetails.order_id,
           plan: planName,
+          tokens: tokens,
           user: userId,
           created_at: new Date(paymentDetails.created_at * 1000).toISOString()
         });
@@ -173,7 +186,8 @@ const verifyPayment = async (req, res) => {
       
       res.status(200).json({
         success: true,
-        message: "Payment verified successfully"
+        message: "Payment verified successfully",
+        tokens: tokens
       });
     } else {
       res.status(400).json({

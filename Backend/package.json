@@ -8,6 +8,7 @@
     "start": "node app.js",
     "dev": "nodemon app.js",
     "migrate": "node config/migrations/run-migrations.js",
+    "migrate:tokens": "node config/migrations/run-tokens-migration.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",

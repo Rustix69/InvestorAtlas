@@ -101,8 +101,47 @@ const getAllUsers = async (req, res) => {
   }
 };
 
+// Get user credits by ID
+const getUserCredits = async (req, res) => {
+  const { userId } = req.params;
+
+  if (!userId) {
+    return res.status(400).json({
+      success: false,
+      error: "User ID is required"
+    });
+  }
+
+  try {
+    const result = await pool.query(
+      'SELECT id, email, name, credits, current_plan, subscription_status, created_at, updated_at FROM users WHERE id = $1',
+      [userId]
+    );
+
+    if (result.rows.length === 0) {
+      return res.status(404).json({
+        success: false,
+        error: "User not found"
+      });
+    }
+
+    res.json({
+      success: true,
+      user: result.rows[0]
+    });
+  } catch (err) {
+    console.error("Error fetching user credits:", err);
+    res.status(500).json({
+      success: false,
+      error: "Database error",
+      details: process.env.NODE_ENV === 'development' ? err.message : undefined
+    });
+  }
+};
+
 module.exports = {
   syncUser,
   getUserById,
-  getAllUsers
+  getAllUsers,
+  getUserCredits
 };

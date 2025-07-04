@@ -1,13 +1,16 @@
 import React from 'react';
-import { Check } from "lucide-react";
+import { Check, Users } from "lucide-react";
 import { motion } from "framer-motion";
 import PaymentButton from "@/components/payment-button";
+import { Button } from "@/components/ui/button";
+import { useUser } from "@clerk/clerk-react";
 
 const PLANS = {
   FREE: {
     id: 'free',
     name: 'Free Plan',
     amount: 0,
+    tokens: 0,
     features: [
       '10K events/month included',
       'Multi-Channel Support: Email, In-app, SMS, Chat, Push',
@@ -20,29 +23,31 @@ const PLANS = {
   PRO: {
     id: 'pro',
     name: 'Pro Plan',
-    amount: 1200, // $12.00
+    amount: 499, // ₹499
+    tokens: 100,
     features: [
-      'Everything in Free, plus:',
-      'Unlimited events/month',
-      'Advanced Analytics & Reporting',
-      'Custom Branding',
-      'Priority Support',
-      'Unlimited Workflows',
-      'Activity Feed Retention: 1 year'
+      '100 Tokens included',
+      'Access to premium investor database',
+      'Advanced search filters',
+      'Export investor data',
+      'Priority support',
+      'Email notifications',
+      'Detailed investor profiles'
     ]
   },
   TEAM: {
     id: 'team',
     name: 'Team Plan',
-    amount: 1200, // $12.00 per user
+    amount: 1499, // ₹1499
+    tokens: 500,
     features: [
+      '500 Tokens included',
       'Everything in Pro, plus:',
-      'Team Collaboration Features',
-      'Role-Based Access Control',
-      'Audit Logs',
-      'SSO Integration',
-      'Dedicated Account Manager',
-      'Custom Contract Terms'
+      'Team collaboration features',
+      'Bulk data export',
+      'API access',
+      'Dedicated account manager',
+      'Custom integrations'
     ]
   }
 };
@@ -145,10 +150,8 @@ const Pricing = () => {
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
               >
-                <PaymentButton 
-                  amount={PLANS.FREE.amount}
-                  planId={PLANS.FREE.id}
-                  planName={PLANS.FREE.name}
+                <Button 
+                  variant="outline"
                   className="w-full mb-4 
                     bg-[#eaeaea] 
                     text-black 
@@ -158,7 +161,11 @@ const Pricing = () => {
                     hover:text-black 
                     transition-colors 
                     duration-300"
-                />
+                  onClick={() => window.location.href = '/investors'}
+                >
+                  <Users size={18} className="mr-2" />
+                  Go to Investors List
+                </Button>
               </motion.div>
               <motion.p 
                 className="text-notifyhub-text-body text-sm text-center"
@@ -224,8 +231,8 @@ const Pricing = () => {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.3 }}
               >
-                <span className="text-4xl font-bold text-white font-satoshi">$12</span>
-                <span className="text-notifyhub-text-body ml-1 mb-1">per user / month</span>
+                <span className="text-4xl font-bold text-white font-satoshi">₹499</span>
+                <span className="text-notifyhub-text-body ml-1 mb-1">for 100 tokens</span>
               </motion.div>
               <motion.div
                 whileHover={{ scale: 1.05 }}
@@ -235,6 +242,7 @@ const Pricing = () => {
                   amount={PLANS.PRO.amount}
                   planId={PLANS.PRO.id}
                   planName={PLANS.PRO.name}
+                  tokens={PLANS.PRO.tokens}
                   className="w-full mb-4 
                     bg-[#eaeaea] 
                     text-black
@@ -306,8 +314,8 @@ const Pricing = () => {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.3 }}
               >
-                <span className="text-4xl font-bold text-white font-satoshi">$12</span>
-                <span className="text-notifyhub-text-body ml-1 mb-1">per user / month</span>
+                <span className="text-4xl font-bold text-white font-satoshi">₹1499</span>
+                <span className="text-notifyhub-text-body ml-1 mb-1">for 500 tokens</span>
               </motion.div>
               <motion.div
                 whileHover={{ scale: 1.05 }}
@@ -317,6 +325,7 @@ const Pricing = () => {
                   amount={PLANS.TEAM.amount}
                   planId={PLANS.TEAM.id}
                   planName={PLANS.TEAM.name}
+                  tokens={PLANS.TEAM.tokens}
                   className="w-full mb-4 
                     bg-[#eaeaea] 
                     text-black 

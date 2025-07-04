@@ -10,6 +10,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Avatar, AvatarFallback } from "@/components/ui/avatar"
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip"
+import { useUser } from "@clerk/clerk-react"
 
 // API endpoint
 const API_BASE_URL = "http://localhost:3001" // Update this to match your backend URL
@@ -66,15 +67,16 @@ export function InvestorDashboard() {
   const [searchQuery, setSearchQuery] = useState("")
   const [selectedLocation, setSelectedLocation] = useState("All Locations")
   const [selectedSector, setSelectedSector] = useState("All Sectors")
-  const [selectedStage, setSelectedStage] = useState("All Stages")
-  const [selectedTicketSize, setSelectedTicketSize] = useState("All Ticket Sizes")
-  const [selectedContactPref, setSelectedContactPref] = useState("All Contact Preferences")
   const [showViewed, setShowViewed] = useState(false)
   const [activeTab, setActiveTab] = useState("all")
   const [currentPage, setCurrentPage] = useState(1)
   const itemsPerPage = 10
   const [revealedInvestors, setRevealedInvestors] = useState(new Set())
   const [revealingInvestors, setRevealingInvestors] = useState(new Set())
+  const [userCredits, setUserCredits] = useState(0)
+  const [creditsLoading, setCreditsLoading] = useState(true)
+  
+  const { isSignedIn, user } = useUser()
 
   // Generate unique filter options from API data
   const locations = ["All Locations", ...new Set(investors.map(investor => investor["Country"]))].filter(Boolean)
@@ -83,9 +85,6 @@ export function InvestorDashboard() {
       investor["Keywords"] ? investor["Keywords"].split(", ").map(k => k.trim()) : []
     )
   )].filter(Boolean)
-  const stages = ["All Stages", "Pre-seed", "Seed", "Series A", "Series B", "Series C+", "Growth"]
-  const ticketSizes = ["All Ticket Sizes", "$0-100K", "$100K-500K", "$500K-1M", "$1M-5M", "$5M+"]
-  const contactPrefs = ["All Contact Preferences", "Direct", "Warm Intro", "Platform Only"]
 
   // Fetch investors data from API
   useEffect(() => {
@@ -115,6 +114,41 @@ export function InvestorDashboard() {
 
     fetchInvestors()
   }, [])
+
+  // Fetch user credits
+  useEffect(() => {
+    const fetchUserCredits = async () => {
+      if (!isSignedIn || !user) {
+        setCreditsLoading(false)
+        return
+      }
+
+      try {
+        setCreditsLoading(true)
+        const response = await fetch(`${API_BASE_URL}/api/users/${user.id}/credits`)
+        
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`)
+        }
+        
+        const result = await response.json()
+        
+        if (result.success && result.user) {
+          setUserCredits(result.user.credits || 0)
+        } else {
+          console.error("Failed to fetch user credits:", result.message)
+          setUserCredits(0)
+        }
+      } catch (err) {
+        console.error("Error fetching user credits:", err)
+        setUserCredits(0)
+      } finally {
+        setCreditsLoading(false)
+      }
+    }
+
+    fetchUserCredits()
+  }, [isSignedIn, user])
 
   // Function to create scramble effect
   const scrambleText = (originalText, targetText, duration = 1000) => {
@@ -225,11 +259,8 @@ export function InvestorDashboard() {
 
     const matchesLocation = selectedLocation === "All Locations" || investor["Country"] === selectedLocation
     const matchesSector = selectedSector === "All Sectors" || investor["Keywords"].toLowerCase().includes(selectedSector.toLowerCase())
-    const matchesStage = selectedStage === "All Stages" || investor["Investment Stage"] === selectedStage
-    const matchesTicketSize = selectedTicketSize === "All Ticket Sizes" || investor["Ticket Size"] === selectedTicketSize
-    const matchesContactPref = selectedContactPref === "All Contact Preferences" || investor["Contact Preference"] === selectedContactPref
 
-    return matchesSearch && matchesLocation && matchesSector && matchesStage && matchesTicketSize && matchesContactPref
+    return matchesSearch && matchesLocation && matchesSector
   })
 
   // Calculate pagination
@@ -257,7 +288,13 @@ export function InvestorDashboard() {
                 <TooltipTrigger asChild>
                   <div className="flex items-center gap-2 rounded-full bg-[#ffff00]/20 px-3 py-1 text-sm font-medium text-[#ffff00]">
                     <Star className="h-4 w-4 fill-[#ffff00] text-[#ffff00]" />
-                    <span>Credits: 10/20</span>
+                    <span>
+                      {creditsLoading ? (
+                        <div className="animate-spin h-3 w-3 border border-[#ffff00] border-t-transparent rounded-full"></div>
+                      ) : (
+                        `Credits: ${userCredits}`
+                      )}
+                    </span>
                   </div>
                 </TooltipTrigger>
                 <TooltipContent className="bg-zinc-900 text-zinc-200 border-zinc-800">
@@ -274,11 +311,6 @@ export function InvestorDashboard() {
           <CardHeader className="pb-3 border-b border-zinc-800">
             <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
               <CardTitle className="text-white">Investor Database</CardTitle>
-              <Button 
-                className="bg-[#eaeaea] text-black hover:bg-[#d0d0d0] hover:text-black"
-              >
-                Access Full Database Now
-              </Button>
             </div>
           </CardHeader>
           <CardContent className="pt-4">
@@ -294,63 +326,28 @@ export function InvestorDashboard() {
                     onChange={(e) => setSearchQuery(e.target.value)}
                   />
                 </div>
-              </div>
-
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3">
-                <Select value={selectedLocation} onValueChange={setSelectedLocation}>
-                  <SelectTrigger className="bg-zinc-800 border-zinc-700 text-zinc-200">
-                    <SelectValue placeholder="Location" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {locations.map((location) => (
-                      <SelectItem key={location} value={location}>{location}</SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-
-                <Select value={selectedSector} onValueChange={setSelectedSector}>
-                  <SelectTrigger className="bg-zinc-800 border-zinc-700 text-zinc-200">
-                    <SelectValue placeholder="Sector" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {sectors.map((sector) => (
-                      <SelectItem key={sector} value={sector}>{sector}</SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-
-                <Select value={selectedStage} onValueChange={setSelectedStage}>
-                  <SelectTrigger className="bg-zinc-800 border-zinc-700 text-zinc-200">
-                    <SelectValue placeholder="Investment Stage" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {stages.map((stage) => (
-                      <SelectItem key={stage} value={stage}>{stage}</SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-
-                <Select value={selectedTicketSize} onValueChange={setSelectedTicketSize}>
-                  <SelectTrigger className="bg-zinc-800 border-zinc-700 text-zinc-200">
-                    <SelectValue placeholder="Ticket Size" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {ticketSizes.map((size) => (
-                      <SelectItem key={size} value={size}>{size}</SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-
-                <Select value={selectedContactPref} onValueChange={setSelectedContactPref}>
-                  <SelectTrigger className="bg-zinc-800 border-zinc-700 text-zinc-200">
-                    <SelectValue placeholder="Contact Preference" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {contactPrefs.map((pref) => (
-                      <SelectItem key={pref} value={pref}>{pref}</SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
+                <div className="flex flex-row gap-3 w-full sm:w-auto mt-3 sm:mt-0">
+                  <Select value={selectedLocation} onValueChange={setSelectedLocation}>
+                    <SelectTrigger className="bg-zinc-800 border-zinc-700 text-zinc-200 min-w-[140px]">
+                      <SelectValue placeholder="Location" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {locations.map((location) => (
+                        <SelectItem key={location} value={location}>{location}</SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                  <Select value={selectedSector} onValueChange={setSelectedSector}>
+                    <SelectTrigger className="bg-zinc-800 border-zinc-700 text-zinc-200 min-w-[140px]">
+                      <SelectValue placeholder="Sector" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {sectors.map((sector) => (
+                        <SelectItem key={sector} value={sector}>{sector}</SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </div>
               </div>
 
               <div className="rounded-md border border-zinc-800">
@@ -760,10 +757,7 @@ export function InvestorDashboard() {
 
                     {/* Pagination */}
                     {totalPages > 1 && (
-                      <div className="flex justify-between items-center p-4 border-t border-zinc-800 bg-zinc-900/50">
-                        <div className="text-xs text-zinc-400">
-                          Showing {indexOfFirstItem + 1}-{Math.min(indexOfLastItem, filteredInvestors.length)} of {filteredInvestors.length} investors
-                        </div>
+                      <div className="flex justify-end items-center p-4 border-t border-zinc-800 bg-zinc-900/50">
                         <div className="flex gap-1">
                           <Button
                             variant="outline"

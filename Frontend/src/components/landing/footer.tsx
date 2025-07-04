@@ -1,5 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
+import { Mail } from 'lucide-react';
 
 const Footer = () => {
   const containerVariants = {
@@ -20,19 +21,6 @@ const Footer = () => {
       transition: {
         type: "spring",
         stiffness: 100,
-        damping: 10
-      }
-    }
-  };
-
-  const linkVariants = {
-    hidden: { x: -10, opacity: 0 },
-    visible: {
-      x: 0, 
-      opacity: 1,
-      transition: {
-        type: "spring",
-        stiffness: 100, 
         damping: 10
       }
     }
@@ -63,12 +51,11 @@ const Footer = () => {
         variants={containerVariants}
       >
         <motion.div 
-          className="grid grid-cols-1 md:grid-cols-5 gap-8 mb-12"
+          className="flex flex-col items-center text-center mb-12"
           variants={containerVariants}
         >
           {/* Logo and Tagline */}
           <motion.div 
-            className="md:col-span-2"
             variants={itemVariants}
           >
             <motion.h2 
@@ -77,138 +64,51 @@ const Footer = () => {
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.2 }}
             >
-              Investor Atlas
+              VC Atlas
             </motion.h2>
             <motion.p 
-              className="text-sm text-zinc-400 mb-6 max-w-xs"
+              className="text-sm text-zinc-400 mb-6 max-w-md mx-auto"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.3 }}
             >
-              Protecting financial institutions and individuals with AI-powered fraud detection.
+              Find and pitch to thousands of vetted investors in just a few clicks. No hidden fees, no gatekeepers. Built for founders. Loved by investors.
             </motion.p>
           </motion.div>
-          
-          {/* Links Columns */}
-          <motion.div variants={itemVariants}>
-            <motion.h3 
-              className="text-white font-semibold mb-4"
-              variants={itemVariants}
-            >
-              Product
-            </motion.h3>
-            <motion.ul 
-              className="space-y-2"
-              variants={containerVariants}
-              initial="hidden"
-              animate="visible"
-              transition={{ staggerChildren: 0.05, delayChildren: 0.4 }}
-            >
-              {['Features', 'Pricing', 'Customers', 'Integrations'].map((item, i) => (
-                <motion.li 
-                  key={i}
-                  variants={linkVariants}
-                >
-                  <motion.a 
-                    href="#" 
-                    className="text-sm text-zinc-400 hover:text-white transition-colors"
-                    whileHover={{ x: 3 }}
-                    transition={{ type: "spring", stiffness: 300, damping: 20 }}
-                  >
-                    {item}
-                  </motion.a>
-                </motion.li>
-              ))}
-            </motion.ul>
-          </motion.div>
-          
-          <motion.div variants={itemVariants}>
-            <motion.h3 
-              className="text-white font-semibold mb-4"
-              variants={itemVariants}
-            >
-              Company
-            </motion.h3>
-            <motion.ul 
-              className="space-y-2"
-              variants={containerVariants}
-              initial="hidden"
-              animate="visible"
-              transition={{ staggerChildren: 0.05, delayChildren: 0.5 }}
-            >
-              {['About', 'Blog', 'Careers', 'Contact'].map((item, i) => (
-                <motion.li 
-                  key={i}
-                  variants={linkVariants}
-                >
-                  <motion.a 
-                    href="#" 
-                    className="text-sm text-zinc-400 hover:text-white transition-colors"
-                    whileHover={{ x: 3 }}
-                    transition={{ type: "spring", stiffness: 300, damping: 20 }}
-                  >
-                    {item}
-                  </motion.a>
-                </motion.li>
-              ))}
-            </motion.ul>
-          </motion.div>
-          
-          <motion.div variants={itemVariants}>
-            <motion.h3 
-              className="text-white font-semibold mb-4"
-              variants={itemVariants}
-            >
-              Resources
-            </motion.h3>
-            <motion.ul 
-              className="space-y-2"
-              variants={containerVariants}
-              initial="hidden"
-              animate="visible"
-              transition={{ staggerChildren: 0.05, delayChildren: 0.6 }}
-            >
-              {['Documentation', 'API Reference', 'Status', 'Support'].map((item, i) => (
-                <motion.li 
-                  key={i}
-                  variants={linkVariants}
-                >
-                  <motion.a 
-                    href="#" 
-                    className="text-sm text-zinc-400 hover:text-white transition-colors"
-                    whileHover={{ x: 3 }}
-                    transition={{ type: "spring", stiffness: 300, damping: 20 }}
-                  >
-                    {item}
-                  </motion.a>
-                </motion.li>
-              ))}
-            </motion.ul>
+
+          {/* Contact Information */}
+          <motion.div 
+            className="bg-zinc-900/50 border border-zinc-800 rounded-lg p-6 max-w-md mx-auto"
+            variants={itemVariants}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.4 }}
+          >
+            <h3 className="text-lg font-semibold text-white mb-3">Contact Us</h3>
+            <p className="text-sm text-zinc-400 mb-4">
+              For any questions about our pricing or billing, please contact us at:
+            </p>
+            <div className="flex items-center justify-center gap-2 text-[#ffff00] hover:text-[#ffff00]/80 transition-colors">
+              <Mail className="h-4 w-4" />
+              <a 
+                href="mailto:prithwijit@getalchemystai.com"
+                className="text-sm font-medium hover:underline"
+              >
+                prithwijit@getalchemystai.com
+              </a>
+            </div>
           </motion.div>
         </motion.div>
         
         <motion.div 
-          className="border-t border-zinc-800 pt-6 flex flex-col md:flex-row justify-between items-center"
+          className="border-t border-zinc-800 pt-6 text-center"
           variants={itemVariants}
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.7 }}
         >
           <div className="text-sm text-zinc-500">
-            © {new Date().getFullYear()} Investor Atlas. All rights reserved.
-          </div>
-          <div className="flex space-x-6 mt-4 md:mt-0">
-            {['Terms', 'Privacy', 'Cookies'].map((item, i) => (
-              <motion.a 
-                key={i}
-                href="#" 
-                className="text-sm text-zinc-500 hover:text-white transition-colors"
-                whileHover={{ y: -2 }}
-                transition={{ type: "spring", stiffness: 300, damping: 20 }}
-              >
-                {item}
-              </motion.a>
-            ))}
+            © {new Date().getFullYear()} VC Atlas. All rights reserved.
           </div>
         </motion.div>
       </motion.div>

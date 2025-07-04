@@ -73,7 +73,7 @@ const FeatureHighlight = () => {
             How It Works
           </motion.h2>
           <motion.p
-            className="text-lg md:text-xl text-notifyhub-text-body mt-6 max-w-3xl font-satoshi text-center mx-auto"
+            className="text-lg md:text-xl text-notifyhub-text-body mt-6 max-w-3xl md:max-w-4xl font-satoshi text-center mx-auto"
             variants={itemVariants}
           >
             Raise capital faster with targeted outreach, automated insights, and fundraising tools that work.
@@ -121,7 +121,7 @@ const FeatureHighlight = () => {
                 <div className="p-2 bg-[#ffff00]/20 rounded-lg">
                   <Send className="h-5 w-5 text-[#ffff00]" />
                 </div>
-                <p className="text-zinc-300">Submit your pitch and track responses with our CRM.</p>
+                <p className="text-zinc-300">Submit your pitch and track responses with our CRM. (Coming Soon)</p>
               </motion.div>
 
               <motion.div
@@ -131,7 +131,7 @@ const FeatureHighlight = () => {
                 <div className="p-2 bg-[#ffff00]/20 rounded-lg">
                   <Zap className="h-5 w-5 text-[#ffff00]" />
                 </div>
-                <p className="text-zinc-300">Upgrade to unlock warm intro suggestions, AI-enhanced emails, and expert reviews.</p>
+                <p className="text-zinc-300">Upgrade to unlock warm intro suggestions, AI-enhanced emails, and expert reviews. (Coming Soon)</p>
               </motion.div>
             </motion.div>
           </motion.div>
@@ -145,7 +145,7 @@ const FeatureHighlight = () => {
               className="text-2xl font-bold text-white mb-8"
               variants={itemVariants}
             >
-              For Investors
+              For Startups
             </motion.h3>
 
             <motion.div className="space-y-6" variants={containerVariants}>
