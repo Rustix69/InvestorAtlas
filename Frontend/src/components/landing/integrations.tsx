@@ -1,6 +1,7 @@
 import React from 'react';
 import { WorldMap } from '@/components/ui/world-map';
 import { motion } from 'framer-motion';
+import { Building2, Globe2, Briefcase } from 'lucide-react';
 
 const Integrations = () => {
   const containerVariants = {
@@ -26,9 +27,27 @@ const Integrations = () => {
     }
   };
 
+  const stats = [
+    {
+      icon: <Building2 className="w-5 h-5 text-[#8e1cb3]" />,
+      value: "5,000+",
+      label: "Active Investors"
+    },
+    {
+      icon: <Globe2 className="w-5 h-5 text-[#8e1cb3]" />,
+      value: "50+",
+      label: "Countries"
+    },
+    {
+      icon: <Briefcase className="w-5 h-5 text-[#8e1cb3]" />,
+      value: "$10B+",
+      label: "Capital Deployed"
+    }
+  ];
+
   return (
     <motion.section 
-      className="w-full py-20 relative overflow-hidden"
+      className="w-full py-24 relative overflow-hidden"
       initial="hidden"
       whileInView="visible"
       viewport={{ once: true, amount: 0.2 }}
@@ -50,24 +69,51 @@ const Integrations = () => {
       />
       
       <div className="container mx-auto flex flex-col items-center container-padding">
-        
-        <motion.h2 
-          className="text-3xl md:text-4xl font-bold text-center text-notifyhub-text-heading mb-6"
+        <motion.div
+          className="mb-6 px-4 py-2 bg-zinc-800/50 rounded-full border border-zinc-700"
           variants={itemVariants}
         >
-          Seamless Integrations with Banks & Trading Platforms
+          <span className="text-sm font-medium text-white">🌍 Global Investor Network</span>
+        </motion.div>
+        
+        <motion.h2 
+          className="text-4xl md:text-5xl font-bold text-center text-white mb-6 font-satoshi tracking-tight"
+          variants={itemVariants}
+        >
+          Global Network of Active Investors
         </motion.h2>
         
         <motion.p 
-          className="text-lg text-center text-notifyhub-text-body mb-12 max-w-xl"
+          className="text-lg text-center text-notifyhub-text-body mb-12 max-w-2xl font-satoshi"
           variants={itemVariants}
         >
-          Investor Atlas connects with your core financial systems to unify fraud signals across banking, brokerage, and payment data.
+          Connect with over 5,000 active investors across major startup hubs worldwide. From Silicon Valley to Singapore, find the right investors for your startup.
         </motion.p>
+
+        {/* Stats Section */}
+        <motion.div 
+          className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16 w-full max-w-4xl"
+          variants={containerVariants}
+        >
+          {stats.map((stat, index) => (
+            <motion.div
+              key={index}
+              className="flex flex-col items-center p-6 rounded-xl bg-zinc-800/30 border border-zinc-700/50 backdrop-blur-sm"
+              variants={itemVariants}
+              whileHover={{ y: -5, transition: { duration: 0.2 } }}
+            >
+              <div className="p-3 bg-[#5e0e9e]/20 rounded-lg mb-4">
+                {stat.icon}
+              </div>
+              <h3 className="text-3xl font-bold text-white mb-1 font-satoshi">{stat.value}</h3>
+              <p className="text-sm text-zinc-400">{stat.label}</p>
+            </motion.div>
+          ))}
+        </motion.div>
 
         {/* World Map with Financial Centers */}
         <motion.div 
-          className="w-full mx-auto mb-16"
+          className="w-full mx-auto relative"
           variants={itemVariants}
           initial={{ opacity: 0, scale: 0.9 }}
           whileInView={{ opacity: 1, scale: 1 }}
@@ -79,6 +125,7 @@ const Integrations = () => {
             delay: 0.3
           }}
         >
+          <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-notifyhub-background pointer-events-none z-10" />
           <WorldMap
             lineColor="#742BAF"
             dots={[
@@ -105,28 +152,7 @@ const Integrations = () => {
               {
                 start: { lat: 37.7749, lng: -122.4194 }, // San Francisco
                 end: { lat: 40.7128, lng: -74.0060 }, // New York
-              },
-              {
-                start: { lat: 37.7749, lng: -122.4194 }, // San Francisco
-                end: { lat: 40.7128, lng: -74.0060 }, // New York
-              },
-              {
-                start: { lat: 37.7749, lng: -122.4194 }, // San Francisco
-                end: { lat: 40.7128, lng: -74.0060 }, // New York
-              },
-              {
-                start: { lat: 37.7749, lng: -122.4194 }, // San Francisco
-                end: { lat: 40.7128, lng: -74.0060 }, // New York
-              },
-              {
-                start: { lat: 37.7749, lng: -122.4194 }, // San Francisco
-                end: { lat: 40.7128, lng: -74.0060 }, // New York
-              },
-              {
-                start: { lat: 37.7749, lng: -122.4194 }, // San Francisco
-                end: { lat: 40.7128, lng: -74.0060 }, // New York
-              },
-              
+              }
             ]}
           />
         </motion.div>

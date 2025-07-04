@@ -104,23 +104,23 @@ const Hero = () => {
           className="mb-6 px-4 py-2 bg-zinc-800/50 rounded-full border border-zinc-700"
           variants={itemVariants}
         >
-          <span className="text-sm font-medium text-white">✨ NEW: Find investors in India and the US at the click of a button</span>
+          <span className="text-sm font-medium text-white">✨ Find and pitch to thousands of vetted investors</span>
         </motion.div>
 
         <motion.h1
           className="text-4xl md:text-5xl lg:text-6xl font-extrabold max-w-4xl mb-6 font-satoshi tracking-tight bg-clip-text text-transparent bg-gradient-to-b from-white via-zinc-400 to-zinc-400"
           variants={itemVariants}
         >
-          Find 15000+ investors ready to
+          Raise from 5,000+ investors.
           <br />
-          fund your startup idea
+          For free.
         </motion.h1>
 
         <motion.p
           className="text-lg md:text-xl text-notifyhub-text-body mb-10 max-w-2xl font-satoshi"
           variants={itemVariants}
         >
-          Search and connect with top angel investors in India and the US
+          Find and pitch to thousands of vetted investors in just a few clicks. No hidden fees, no gatekeepers. Built for founders. Loved by investors.
         </motion.p>
 
         <motion.div
@@ -144,34 +144,30 @@ const Hero = () => {
                 rounded-xl"
             >
               <Search size={18} />
-              Find Investors
+              Explore Investors
             </Button>
           </motion.div>
 
-          {!isSignedIn && (
-            <motion.div
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
+          <motion.div
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+          >
+            <Button
+              variant="outline"
+              className="w-full sm:w-auto flex items-center gap-2 
+                bg-transparent
+                text-white 
+                font-medium
+                px-6 py-6 
+                hover:bg-white/10
+                border-[1px] border-[#8e1cb3]/50
+                shadow-md
+                rounded-xl"
             >
-              <SignInButton mode="modal">
-                <Button
-                  variant="outline"
-                  className="w-full sm:w-auto flex items-center gap-2 
-                    bg-transparent
-                    text-white 
-                    font-medium
-                    px-6 py-6 
-                    hover:bg-white/10
-                    border-[1px] border-[#8e1cb3]/50
-                    shadow-md
-                    rounded-xl"
-                >
-                  <LogIn size={18} />
-                  Sign In
-                </Button>
-              </SignInButton>
-            </motion.div>
-          )}
+              <ChevronRight size={18} />
+              Pitch Now, It's Free
+            </Button>
+          </motion.div>
         </motion.div>
 
         {/* Dashboard Preview */}

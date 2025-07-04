@@ -64,8 +64,11 @@ export function InvestorDashboard() {
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
   const [searchQuery, setSearchQuery] = useState("")
-  const [selectedCountry, setSelectedCountry] = useState("All Countries")
-  const [selectedKeyword, setSelectedKeyword] = useState("All Keywords")
+  const [selectedLocation, setSelectedLocation] = useState("All Locations")
+  const [selectedSector, setSelectedSector] = useState("All Sectors")
+  const [selectedStage, setSelectedStage] = useState("All Stages")
+  const [selectedTicketSize, setSelectedTicketSize] = useState("All Ticket Sizes")
+  const [selectedContactPref, setSelectedContactPref] = useState("All Contact Preferences")
   const [showViewed, setShowViewed] = useState(false)
   const [activeTab, setActiveTab] = useState("all")
   const [currentPage, setCurrentPage] = useState(1)
@@ -73,13 +76,16 @@ export function InvestorDashboard() {
   const [revealedInvestors, setRevealedInvestors] = useState(new Set())
   const [revealingInvestors, setRevealingInvestors] = useState(new Set())
 
-  // Generate unique countries and keywords from API data
-  const countries = ["All Countries", ...new Set(investors.map(investor => investor["Country"]))].filter(Boolean)
-  const keywords = ["All Keywords", ...new Set(
+  // Generate unique filter options from API data
+  const locations = ["All Locations", ...new Set(investors.map(investor => investor["Country"]))].filter(Boolean)
+  const sectors = ["All Sectors", ...new Set(
     investors.flatMap(investor => 
       investor["Keywords"] ? investor["Keywords"].split(", ").map(k => k.trim()) : []
     )
   )].filter(Boolean)
+  const stages = ["All Stages", "Pre-seed", "Seed", "Series A", "Series B", "Series C+", "Growth"]
+  const ticketSizes = ["All Ticket Sizes", "$0-100K", "$100K-500K", "$500K-1M", "$1M-5M", "$5M+"]
+  const contactPrefs = ["All Contact Preferences", "Direct", "Warm Intro", "Platform Only"]
 
   // Fetch investors data from API
   useEffect(() => {
@@ -209,7 +215,7 @@ export function InvestorDashboard() {
     }
   }
 
-  // Filter investors based on search, country, keywords
+  // Filter investors based on all criteria
   const filteredInvestors = investors.filter((investor) => {
     const matchesSearch =
       investor["Full Name"].toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -217,12 +223,13 @@ export function InvestorDashboard() {
       investor["Venture Capital Name"].toLowerCase().includes(searchQuery.toLowerCase()) ||
       investor["Keywords"].toLowerCase().includes(searchQuery.toLowerCase())
 
-    const matchesCountry = selectedCountry === "All Countries" || investor["Country"] === selectedCountry
+    const matchesLocation = selectedLocation === "All Locations" || investor["Country"] === selectedLocation
+    const matchesSector = selectedSector === "All Sectors" || investor["Keywords"].toLowerCase().includes(selectedSector.toLowerCase())
+    const matchesStage = selectedStage === "All Stages" || investor["Investment Stage"] === selectedStage
+    const matchesTicketSize = selectedTicketSize === "All Ticket Sizes" || investor["Ticket Size"] === selectedTicketSize
+    const matchesContactPref = selectedContactPref === "All Contact Preferences" || investor["Contact Preference"] === selectedContactPref
 
-    const matchesKeyword =
-      selectedKeyword === "All Keywords" || investor["Keywords"].toLowerCase().includes(selectedKeyword.toLowerCase())
-
-    return matchesSearch && matchesCountry && matchesKeyword
+    return matchesSearch && matchesLocation && matchesSector && matchesStage && matchesTicketSize && matchesContactPref
   })
 
   // Calculate pagination
@@ -240,7 +247,10 @@ export function InvestorDashboard() {
     <div className="flex min-h-screen flex-col bg-zinc-950">
       <header className="sticky top-0 z-10 border-b border-zinc-800 bg-black/90 px-4 py-3 sm:px-6">
         <div className="flex items-center justify-between">
-          <h1 className="text-2xl font-bold tracking-tight text-white">Investor Database</h1>
+          <div>
+            <h1 className="text-2xl font-bold tracking-tight text-white">Find Active Venture Capitalists & Angel Investors</h1>
+            <p className="text-sm text-zinc-400 mt-1">Search a live directory of 5,000+ investors by location, industry focus, investment stage, and more.</p>
+          </div>
           <div className="flex items-center gap-4">
             <TooltipProvider>
               <Tooltip>
@@ -263,7 +273,12 @@ export function InvestorDashboard() {
         <Card className="bg-zinc-900 border-zinc-800 shadow-lg">
           <CardHeader className="pb-3 border-b border-zinc-800">
             <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-              <CardTitle className="text-white">Investors</CardTitle>
+              <CardTitle className="text-white">Investor Database</CardTitle>
+              <Button 
+                className="bg-[#5e0e9e] hover:bg-[#500c83] text-white"
+              >
+                Access Full Database Now
+              </Button>
             </div>
           </CardHeader>
           <CardContent className="pt-4">
@@ -279,34 +294,63 @@ export function InvestorDashboard() {
                     onChange={(e) => setSearchQuery(e.target.value)}
                   />
                 </div>
-                <div className="flex flex-1 flex-col gap-3 sm:flex-row">
-                  <Select value={selectedCountry} onValueChange={setSelectedCountry}>
-                    <SelectTrigger className="w-full sm:w-[180px] bg-zinc-800 border-zinc-700 text-zinc-200">
-                      <MapPin className="mr-2 h-4 w-4 text-zinc-400" />
-                      <SelectValue placeholder="Country" />
-                    </SelectTrigger>
-                    <SelectContent className="bg-zinc-800 border-zinc-700 text-zinc-200 max-h-60 overflow-y-auto">
-                      {countries.map((country) => (
-                        <SelectItem key={country} value={country}>
-                          {country}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                  <Select value={selectedKeyword} onValueChange={setSelectedKeyword}>
-                    <SelectTrigger className="w-full sm:w-[180px] bg-zinc-800 border-zinc-700 text-zinc-200">
-                      <Tag className="mr-2 h-4 w-4 text-zinc-400" />
-                      <SelectValue placeholder="Keywords" />
-                    </SelectTrigger>
-                    <SelectContent className="bg-zinc-800 border-zinc-700 text-zinc-200 max-h-60 overflow-y-auto">
-                      {keywords.map((keyword) => (
-                        <SelectItem key={keyword} value={keyword}>
-                          {keyword}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                </div>
+              </div>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3">
+                <Select value={selectedLocation} onValueChange={setSelectedLocation}>
+                  <SelectTrigger className="bg-zinc-800 border-zinc-700 text-zinc-200">
+                    <SelectValue placeholder="Location" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {locations.map((location) => (
+                      <SelectItem key={location} value={location}>{location}</SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+
+                <Select value={selectedSector} onValueChange={setSelectedSector}>
+                  <SelectTrigger className="bg-zinc-800 border-zinc-700 text-zinc-200">
+                    <SelectValue placeholder="Sector" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {sectors.map((sector) => (
+                      <SelectItem key={sector} value={sector}>{sector}</SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+
+                <Select value={selectedStage} onValueChange={setSelectedStage}>
+                  <SelectTrigger className="bg-zinc-800 border-zinc-700 text-zinc-200">
+                    <SelectValue placeholder="Investment Stage" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {stages.map((stage) => (
+                      <SelectItem key={stage} value={stage}>{stage}</SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+
+                <Select value={selectedTicketSize} onValueChange={setSelectedTicketSize}>
+                  <SelectTrigger className="bg-zinc-800 border-zinc-700 text-zinc-200">
+                    <SelectValue placeholder="Ticket Size" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {ticketSizes.map((size) => (
+                      <SelectItem key={size} value={size}>{size}</SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+
+                <Select value={selectedContactPref} onValueChange={setSelectedContactPref}>
+                  <SelectTrigger className="bg-zinc-800 border-zinc-700 text-zinc-200">
+                    <SelectValue placeholder="Contact Preference" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {contactPrefs.map((pref) => (
+                      <SelectItem key={pref} value={pref}>{pref}</SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
               </div>
 
               <div className="rounded-md border border-zinc-800">
