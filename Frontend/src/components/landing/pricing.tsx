@@ -150,12 +150,12 @@ const Pricing = () => {
                   planId={PLANS.FREE.id}
                   planName={PLANS.FREE.name}
                   className="w-full mb-4 
-                    border-zinc-700 
-                    text-white 
+                    bg-[#eaeaea] 
+                    text-black 
                     font-satoshi
                     font-medium
-                    hover:bg-zinc-800 
-                    hover:text-white 
+                    hover:bg-[#d0d0d0] 
+                    hover:text-black 
                     transition-colors 
                     duration-300"
                 />
@@ -183,7 +183,7 @@ const Pricing = () => {
                   className="flex items-start"
                   variants={listItemVariants}
                 >
-                  <Check size={18} className="text-[#5e0e9e] mr-2 shrink-0 mt-0.5" />
+                  <Check size={18} className="text-green-500 mr-2 shrink-0 mt-0.5" />
                   <span className="text-sm text-notifyhub-text-body">{feature}</span>
                 </motion.li>
               ))}
@@ -193,10 +193,10 @@ const Pricing = () => {
           {/* Pro Plan */}
           <motion.div 
             className="gradient-card rounded-xl p-6 relative 
-              border border-[#5e0e9e]/30
-              bg-gradient-to-b from-[#5e0e9e]/20 via-[#5e0e9e]/10 to-zinc-950/90
-              shadow-[0_0_30px_rgba(14,94,61,0.2)] 
-              hover:shadow-[0_0_40px_rgba(14,94,61,0.3)] 
+              border border-[#ffff00]/30
+              bg-gradient-to-b from-[#ffff00]/20 via-[#ffff00]/10 to-zinc-950/90
+              shadow-[0_0_30px_rgba(255,255,0,0.2)] 
+              hover:shadow-[0_0_40px_rgba(255,255,0,0.3)] 
               transition-all duration-300
               before:absolute before:top-0 before:left-0 before:right-0 before:h-1/2 
               before:bg-gradient-to-b before:from-white/10 before:to-transparent 
@@ -236,11 +236,12 @@ const Pricing = () => {
                   planId={PLANS.PRO.id}
                   planName={PLANS.PRO.name}
                   className="w-full mb-4 
-                    bg-[#5e0e9e] 
-                    text-white
+                    bg-[#eaeaea] 
+                    text-black
                     font-medium
-                    hover:bg-[#500c8e] 
-                    border-[1px] border-[#8e1cb3]
+                    hover:bg-[#d0d0d0] 
+                    hover:text-black
+                    border-[1px] border-[#ffff00]/30
                     shadow-md
                     rounded-xl
                     transition-colors 
@@ -270,7 +271,7 @@ const Pricing = () => {
                   className="flex items-start"
                   variants={listItemVariants}
                 >
-                  <Check size={18} className="text-[#5e0e9e] mr-2 shrink-0 mt-0.5" />
+                  <Check size={18} className="text-green-500 mr-2 shrink-0 mt-0.5" />
                   <span className="text-sm text-notifyhub-text-body">{feature}</span>
                 </motion.li>
               ))}
@@ -317,11 +318,12 @@ const Pricing = () => {
                   planId={PLANS.TEAM.id}
                   planName={PLANS.TEAM.name}
                   className="w-full mb-4 
-                    bg-[#5e0e9e] 
-                    text-white 
+                    bg-[#eaeaea] 
+                    text-black 
                     font-medium
-                    hover:bg-[#500c8e] 
-                    border-[1px] border-[#8e1cb3]
+                    hover:bg-[#d0d0d0] 
+                    hover:text-black
+                    border-[1px] border-[#ffff00]/30
                     shadow-md
                     rounded-xl
                     transition-colors 
@@ -351,7 +353,7 @@ const Pricing = () => {
                   className="flex items-start"
                   variants={listItemVariants}
                 >
-                  <Check size={18} className="text-[#5e0e9e] mr-2 shrink-0 mt-0.5" />
+                  <Check size={18} className="text-green-500 mr-2 shrink-0 mt-0.5" />
                   <span className="text-sm text-notifyhub-text-body">{feature}</span>
                 </motion.li>
               ))}

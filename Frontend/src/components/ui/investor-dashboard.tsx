@@ -249,14 +249,14 @@ export function InvestorDashboard() {
         <div className="flex items-center justify-between">
           <div>
             <h1 className="text-2xl font-bold tracking-tight text-white">Find Active Venture Capitalists & Angel Investors</h1>
-            <p className="text-sm text-zinc-400 mt-1">Search a live directory of 5,000+ investors by location, industry focus, investment stage, and more.</p>
+            <p className="text-sm text-zinc-400 mt-1">Search a live directory of 15,000+ investors by location, industry focus, investment stage, and more.</p>
           </div>
           <div className="flex items-center gap-4">
             <TooltipProvider>
               <Tooltip>
                 <TooltipTrigger asChild>
-                  <div className="flex items-center gap-2 rounded-full bg-[#5e0e9e]/20 px-3 py-1 text-sm font-medium text-[#8e1cb3]">
-                    <Star className="h-4 w-4 fill-[#8e1cb3] text-[#8e1cb3]" />
+                  <div className="flex items-center gap-2 rounded-full bg-[#ffff00]/20 px-3 py-1 text-sm font-medium text-[#ffff00]">
+                    <Star className="h-4 w-4 fill-[#ffff00] text-[#ffff00]" />
                     <span>Credits: 10/20</span>
                   </div>
                 </TooltipTrigger>
@@ -275,7 +275,7 @@ export function InvestorDashboard() {
             <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
               <CardTitle className="text-white">Investor Database</CardTitle>
               <Button 
-                className="bg-[#5e0e9e] hover:bg-[#500c83] text-white"
+                className="bg-[#eaeaea] text-black hover:bg-[#d0d0d0] hover:text-black"
               >
                 Access Full Database Now
               </Button>
@@ -289,7 +289,7 @@ export function InvestorDashboard() {
                   <Input
                     type="search"
                     placeholder="Search investors, companies, or keywords..."
-                    className="pl-8 bg-zinc-800 border-zinc-700 text-zinc-200 focus:border-[#8e1cb3] focus:ring-[#5e0e9e]"
+                    className="pl-8 bg-zinc-800 border-zinc-700 text-zinc-200 focus:border-[#ffff00] focus:ring-[#ffff00]"
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
                   />
@@ -367,7 +367,7 @@ export function InvestorDashboard() {
                     <div className="text-zinc-500 text-sm">{error}</div>
                     <button 
                       onClick={() => window.location.reload()} 
-                      className="mt-4 px-4 py-2 bg-[#5e0e9e] text-white rounded hover:bg-[#500c83] transition-colors"
+                      className="mt-4 px-4 py-2 bg-[#eaeaea] text-black hover:bg-[#d0d0d0] rounded transition-colors"
                     >
                       Retry
                     </button>
@@ -385,7 +385,7 @@ export function InvestorDashboard() {
                             <div className="flex items-center justify-between">
                               <div className="flex items-center gap-3">
                                 <Avatar className="h-10 w-10 border border-zinc-700">
-                                  <AvatarFallback className="bg-[#5e0e9e]/20 text-[#8e1cb3]">
+                                  <AvatarFallback className="bg-[#ffff00]/20 text-[#ffff00]">
                                     {investor["First Name"][0]}{investor["Last Name"][0]}
                                   </AvatarFallback>
                                 </Avatar>
@@ -440,7 +440,7 @@ export function InvestorDashboard() {
                               <div className="space-y-2">
                                 <div className="flex items-center gap-2 text-sm text-zinc-300">
                                   <Mail className="h-3 w-3 text-zinc-500" />
-                                  <a href={`mailto:${investor["Email"]}`} className="hover:text-[#8e1cb3] transition-colors">
+                                  <a href={`mailto:${investor["Email"]}`} className="hover:text-[#ffff00] transition-colors">
                                     <ScrambleText 
                                       originalText={investors.find(orig => orig.row_id === investor.row_id && !revealedInvestors.has(investor.row_id))?.["Email"] || investor["Email"]}
                                       targetText={investor["Email"]}
@@ -465,7 +465,7 @@ export function InvestorDashboard() {
                                       href={investor["Linkedin URL"]} 
                                       target="_blank" 
                                       rel="noopener noreferrer"
-                                      className="hover:text-[#8e1cb3] transition-colors"
+                                      className="hover:text-[#ffff00] transition-colors"
                                     >
                                       LinkedIn Profile
                                     </a>
@@ -491,7 +491,7 @@ export function InvestorDashboard() {
                                       href={investor["Website"]} 
                                       target="_blank" 
                                       rel="noopener noreferrer"
-                                      className="hover:text-[#8e1cb3] transition-colors"
+                                      className="hover:text-[#ffff00] transition-colors"
                                     >
                                       <ScrambleText 
                                         originalText={investors.find(orig => orig.row_id === investor.row_id && !revealedInvestors.has(investor.row_id))?.["Website"] || investor["Website"]}
@@ -526,7 +526,7 @@ export function InvestorDashboard() {
                                   <Badge 
                                     key={index} 
                                     variant="secondary" 
-                                    className="text-xs bg-[#5e0e9e]/20 text-[#8e1cb3] hover:bg-[#5e0e9e]/30"
+                                    className="text-xs bg-[#ffff00]/20 text-[#ffff00] hover:bg-[#ffff00]/30"
                                   >
                                     {keyword.trim()}
                                   </Badge>
@@ -537,13 +537,13 @@ export function InvestorDashboard() {
                           <CardHeader className="pt-0 pb-4">
                             <Button 
                               size="sm" 
-                              className="w-full bg-[#5e0e9e] hover:bg-[#500c83] text-white border border-[#8e1cb3] disabled:opacity-50"
+                              className="w-full bg-[#eaeaea] hover:bg-[#d0d0d0] text-black border border-[#ffff00]/30 disabled:opacity-50"
                               onClick={() => handleRevealInvestor(investor.row_id)}
                               disabled={revealedInvestors.has(investor.row_id) || revealingInvestors.has(investor.row_id)}
                             >
                               {revealingInvestors.has(investor.row_id) ? (
                                 <div className="flex items-center gap-2">
-                                  <div className="animate-spin h-3 w-3 border border-white border-t-transparent rounded-full"></div>
+                                  <div className="animate-spin h-3 w-3 border border-black border-t-transparent rounded-full"></div>
                                   Revealing...
                                 </div>
                               ) : revealedInvestors.has(investor.row_id) ? (
@@ -575,7 +575,7 @@ export function InvestorDashboard() {
                           <div className="col-span-3">
                             <div className="flex items-center gap-3">
                               <Avatar className="h-9 w-9 border border-zinc-700">
-                                <AvatarFallback className="bg-[#5e0e9e]/20 text-[#8e1cb3]">
+                                <AvatarFallback className="bg-[#ffff00]/20 text-[#ffff00]">
                                   {investor["First Name"][0]}{investor["Last Name"][0]}
                                 </AvatarFallback>
                               </Avatar>
@@ -630,7 +630,7 @@ export function InvestorDashboard() {
                              <div className="space-y-1">
                                <div className="flex items-center gap-2 text-xs text-zinc-300">
                                  <Mail className="h-3 w-3 text-zinc-500" />
-                                 <a href={`mailto:${investor["Email"]}`} className="hover:text-[#8e1cb3] transition-colors truncate">
+                                 <a href={`mailto:${investor["Email"]}`} className="hover:text-[#ffff00] transition-colors truncate">
                                    <ScrambleText 
                                      originalText={investors.find(orig => orig.row_id === investor.row_id && !revealedInvestors.has(investor.row_id))?.["Email"] || investor["Email"]}
                                      targetText={investor["Email"]}
@@ -669,7 +669,7 @@ export function InvestorDashboard() {
                                      href={investor["Linkedin URL"]} 
                                      target="_blank" 
                                      rel="noopener noreferrer"
-                                     className="hover:text-[#8e1cb3] transition-colors"
+                                     className="hover:text-[#ffff00] transition-colors"
                                    >
                                      LinkedIn
                                    </a>
@@ -695,7 +695,7 @@ export function InvestorDashboard() {
                                      href={investor["Website"]} 
                                      target="_blank" 
                                      rel="noopener noreferrer"
-                                     className="hover:text-[#8e1cb3] transition-colors truncate"
+                                     className="hover:text-[#ffff00] transition-colors truncate"
                                    >
                                      Website
                                    </a>
@@ -722,7 +722,7 @@ export function InvestorDashboard() {
                                  <Badge 
                                    key={index} 
                                    variant="secondary" 
-                                   className="text-xs bg-[#5e0e9e]/20 text-[#8e1cb3] hover:bg-[#5e0e9e]/30"
+                                   className="text-xs bg-[#ffff00]/20 text-[#ffff00] hover:bg-[#ffff00]/30"
                                  >
                                    {keyword.trim()}
                                  </Badge>
@@ -738,7 +738,7 @@ export function InvestorDashboard() {
                              <Button 
                                size="sm" 
                                variant="outline" 
-                               className="border-zinc-700 text-zinc-200 hover:bg-[#5e0e9e] hover:text-white hover:border-[#8e1cb3] disabled:opacity-50"
+                               className="border-zinc-700 text-zinc-200 hover:bg-[#eaeaea] hover:text-black hover:border-[#ffff00]/30 disabled:opacity-50"
                                onClick={() => handleRevealInvestor(investor.row_id)}
                                disabled={revealedInvestors.has(investor.row_id) || revealingInvestors.has(investor.row_id)}
                              >
@@ -793,7 +793,7 @@ export function InvestorDashboard() {
                                 size="sm"
                                 className={`w-8 ${
                                   currentPage === pageNum
-                                    ? "bg-[#5e0e9e] text-white border-[#8e1cb3]"
+                                    ? "bg-[#eaeaea] text-black hover:bg-[#d0d0d0] border-[#ffff00]/30"
                                     : "border-zinc-700 text-zinc-300 hover:bg-zinc-800"
                                 }`}
                                 onClick={() => handlePageChange(pageNum)}

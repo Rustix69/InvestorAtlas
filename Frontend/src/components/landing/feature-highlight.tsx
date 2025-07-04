@@ -49,7 +49,7 @@ const FeatureHighlight = () => {
     >
       <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxnIGZpbGw9IiMyMDIwMjAiIGZpbGwtb3BhY2l0eT0iMC40Ij48cGF0aCBkPSJNMzYgMzRjMC0yLjIgMS44LTQgNC00czQgMS44IDQgNC0xLjggNC00IDQtNC0xLjgtNC00eiIvPjwvZz48L2c+PC9zdmc+')] opacity-10" />
       <motion.div
-        className="absolute h-80 w-80 rounded-full bg-notifyhub-primary/5 blur-[150px] bottom-0 left-1/2 transform -translate-x-1/2"
+        className="absolute h-80 w-80 rounded-full bg-[#ffff00]/5 blur-[150px] bottom-0 left-1/2 transform -translate-x-1/2"
         animate={{
           scale: [1, 1.2, 1],
           opacity: [0.5, 0.7, 0.5]
@@ -98,18 +98,18 @@ const FeatureHighlight = () => {
                 className="flex items-start gap-4 p-4 rounded-lg bg-zinc-800/50 border border-zinc-700"
                 variants={itemVariants}
               >
-                <div className="p-2 bg-[#5e0e9e]/20 rounded-lg">
-                  <Search className="h-5 w-5 text-[#8e1cb3]" />
+                <div className="p-2 bg-[#ffff00]/20 rounded-lg">
+                  <Search className="h-5 w-5 text-[#ffff00]" />
                 </div>
-                <p className="text-zinc-300">Access 5,000+ global VCs, angels, and micro-funds.</p>
+                <p className="text-zinc-300">Access 15,000+ global VCs, angels, and micro-funds.</p>
               </motion.div>
 
               <motion.div
                 className="flex items-start gap-4 p-4 rounded-lg bg-zinc-800/50 border border-zinc-700"
                 variants={itemVariants}
               >
-                <div className="p-2 bg-[#5e0e9e]/20 rounded-lg">
-                  <Filter className="h-5 w-5 text-[#8e1cb3]" />
+                <div className="p-2 bg-[#ffff00]/20 rounded-lg">
+                  <Filter className="h-5 w-5 text-[#ffff00]" />
                 </div>
                 <p className="text-zinc-300">Filter by sector, geography, check size, stage, and more.</p>
               </motion.div>
@@ -118,8 +118,8 @@ const FeatureHighlight = () => {
                 className="flex items-start gap-4 p-4 rounded-lg bg-zinc-800/50 border border-zinc-700"
                 variants={itemVariants}
               >
-                <div className="p-2 bg-[#5e0e9e]/20 rounded-lg">
-                  <Send className="h-5 w-5 text-[#8e1cb3]" />
+                <div className="p-2 bg-[#ffff00]/20 rounded-lg">
+                  <Send className="h-5 w-5 text-[#ffff00]" />
                 </div>
                 <p className="text-zinc-300">Submit your pitch and track responses with our CRM.</p>
               </motion.div>
@@ -128,8 +128,8 @@ const FeatureHighlight = () => {
                 className="flex items-start gap-4 p-4 rounded-lg bg-zinc-800/50 border border-zinc-700"
                 variants={itemVariants}
               >
-                <div className="p-2 bg-[#5e0e9e]/20 rounded-lg">
-                  <Zap className="h-5 w-5 text-[#8e1cb3]" />
+                <div className="p-2 bg-[#ffff00]/20 rounded-lg">
+                  <Zap className="h-5 w-5 text-[#ffff00]" />
                 </div>
                 <p className="text-zinc-300">Upgrade to unlock warm intro suggestions, AI-enhanced emails, and expert reviews.</p>
               </motion.div>
@@ -153,8 +153,8 @@ const FeatureHighlight = () => {
                 className="flex items-start gap-4 p-4 rounded-lg bg-zinc-800/50 border border-zinc-700"
                 variants={itemVariants}
               >
-                <div className="p-2 bg-[#5e0e9e]/20 rounded-lg">
-                  <BarChart3 className="h-5 w-5 text-[#8e1cb3]" />
+                <div className="p-2 bg-[#ffff00]/20 rounded-lg">
+                  <BarChart3 className="h-5 w-5 text-[#ffff00]" />
                 </div>
                 <p className="text-zinc-300">Receive pre-qualified deal flow tailored to your thesis.</p>
               </motion.div>
@@ -163,8 +163,8 @@ const FeatureHighlight = () => {
                 className="flex items-start gap-4 p-4 rounded-lg bg-zinc-800/50 border border-zinc-700"
                 variants={itemVariants}
               >
-                <div className="p-2 bg-[#5e0e9e]/20 rounded-lg">
-                  <ThumbsUp className="h-5 w-5 text-[#8e1cb3]" />
+                <div className="p-2 bg-[#ffff00]/20 rounded-lg">
+                  <ThumbsUp className="h-5 w-5 text-[#ffff00]" />
                 </div>
                 <p className="text-zinc-300">Define your investment preferences and filter out mismatched pitches.</p>
               </motion.div>
@@ -173,8 +173,8 @@ const FeatureHighlight = () => {
                 className="flex items-start gap-4 p-4 rounded-lg bg-zinc-800/50 border border-zinc-700"
                 variants={itemVariants}
               >
-                <div className="p-2 bg-[#5e0e9e]/20 rounded-lg">
-                  <Shield className="h-5 w-5 text-[#8e1cb3]" />
+                <div className="p-2 bg-[#ffff00]/20 rounded-lg">
+                  <Shield className="h-5 w-5 text-[#ffff00]" />
                 </div>
                 <p className="text-zinc-300">No spam, no fees, just curated deal opportunities.</p>
               </motion.div>
