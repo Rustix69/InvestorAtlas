@@ -3,36 +3,23 @@ import { motion } from 'framer-motion';
 
 const ClientLogos = () => {
   const logos = [
-    { src: '/logos/Google.svg', alt: 'Google' },
-    { src: '/logos/Microsoft.svg', alt: 'Microsoft' },
-    { src: '/logos/GitHub.svg', alt: 'GitHub' },
-    { src: '/logos/Uber.svg', alt: 'Uber' },
-    { src: '/logos/Notion.svg', alt: 'Notion' }
+    { src: '/logos/logo01.png', alt: 'Client Logo 1' },
+    { src: '/logos/logo02.svg', alt: 'Client Logo 2' },
+    { src: '/logos/logo03.png', alt: 'Client Logo 3' },
+    { src: '/logos/logo04.png', alt: 'Client Logo 4' },
+    { src: '/logos/logo05.png', alt: 'Client Logo 5' },
+    { src: '/logos/logo06.png', alt: 'Client Logo 6' },
+    { src: '/logos/logo07.png', alt: 'Client Logo 7' },
+    { src: '/logos/logo08.png', alt: 'Client Logo 8' },
+    { src: '/logos/logo09.png', alt: 'Client Logo 9' }
   ];
 
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.1,
-        delayChildren: 0.2
-      }
-    }
-  };
-
-  const itemVariants = {
-    hidden: { opacity: 0, y: 20 },
-    visible: { 
-      opacity: 1, 
-      y: 0,
-      transition: { type: "spring", stiffness: 100, damping: 10 }
-    }
-  };
+  // Duplicate logos for seamless infinite scroll
+  const duplicatedLogos = [...logos, ...logos];
 
   return (
     <motion.section 
-      className="w-full py-24 bg-black/50 backdrop-blur-sm"
+      className="w-full py-24 bg-transparent"
       initial={{ opacity: 0 }}
       whileInView={{ opacity: 1 }}
       viewport={{ once: true }}
@@ -41,53 +28,59 @@ const ClientLogos = () => {
       <div className="container mx-auto container-padding">
         <motion.div 
           className="flex flex-col items-center mb-12"
-          variants={containerVariants}
-          initial="hidden"
-          whileInView="visible"
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
         >
           <motion.h3 
             className="text-4xl font-medium text-white/70 mb-12 text-center"
-            variants={itemVariants}
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.2 }}
           >
-            Trusted by Industry Leaders Worldwide
+            Our Investors comes from all over the world
           </motion.h3>
           
-          <motion.div 
-            className="grid grid-cols-3 md:grid-cols-5 gap-12 items-center justify-center w-full max-w-5xl"
-            variants={itemVariants}
-          >
-            {logos.map((logo, index) => (
-              <motion.div 
-                key={index} 
-                className="flex items-center justify-center
-                  bg-white/5 hover:bg-white/10 
-                  rounded-xl p-6 
-                  gap-7
-                  shadow-sm hover:shadow-xl"
-                whileHover={{ 
-                  y: -8,
-                  backgroundColor: 'rgba(255, 255, 255, 0.1)',
-                  boxShadow: "0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)"
-                }}
-                transition={{ type: "spring", stiffness: 300, damping: 20 }}
-                variants={itemVariants}
-              >
-                <motion.img 
-                  src={logo.src} 
-                  alt={logo.alt} 
-                  className="max-h-8 max-w-[150px] 
-                    opacity-50
-                    invert brightness-0 contrast-200"
+          <div className="w-full max-w-7xl overflow-hidden">
+            <motion.div 
+              className="flex gap-12 items-center"
+              animate={{
+                x: [0, -50 * logos.length],
+              }}
+              transition={{
+                x: {
+                  duration: 20,
+                  repeat: Infinity,
+                  ease: "linear",
+                },
+              }}
+            >
+              {duplicatedLogos.map((logo, index) => (
+                <motion.div 
+                  key={index} 
+                  className="flex items-center justify-center
+                    bg-transparent
+                    rounded-xl p-6 
+                    min-w-[200px]
+                    hover:scale-110"
                   whileHover={{ 
                     scale: 1.1,
-                    opacity: 1
+                    transition: { type: "spring", stiffness: 300, damping: 20 }
                   }}
-                  transition={{ type: "spring", stiffness: 400, damping: 10 }}
-                />
-              </motion.div>
-            ))}
-          </motion.div>
+                >
+                  <motion.img 
+                    src={logo.src} 
+                    alt={logo.alt} 
+                    className="h-12 w-auto object-contain
+                      opacity-50 hover:opacity-100
+                      transition-opacity duration-300
+                      filter brightness-0 invert"
+                  />
+                </motion.div>
+              ))}
+            </motion.div>
+          </div>
         </motion.div>
       </div>
     </motion.section>
